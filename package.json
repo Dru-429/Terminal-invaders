@@ -1,0 +1,26 @@
+{
+  "name": "terminal-invade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dru-429/Terminal-invade.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Dru-429/Terminal-invade/issues"
+  },
+  "homepage": "https://github.com/Dru-429/Terminal-invade#readme",
+  "dependencies": {
+    "drawille-canvas": "^1.2.1",
+    "figlet": "^1.11.0",
+    "terminal-kit": "^3.1.2"
+  }
+}
