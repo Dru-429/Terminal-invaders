@@ -1,15 +1,32 @@
 # Terminal Invaders
 
+
+## Installation
+
+### Install from package
+
+```bash
+npm i terminal-invaders
 ```
- _____                    _                     _
-|_   _|                  (_)                   | |
-  | | ___  _ __ ___  _ __ _  ___  _ __   __ _  | |__
-  | |/ _ \| '_ ` _ \| '__| |/ _ \| '_ \ / _` | | '_ \
-  | | (_) | | | | | | |  | | (_) | | | | (_| | | |_) |
-  \_/\___/|_| |_| |_|_|  |_|\___/|_| |_|\__, | |_.__/
-                                        __/ |         
-                                       |___/          
+
+### Install from source (bash)
+
+```bash
+git clone <your-repo-url>
+cd Terminal-invaders
+npm install terminal-kit drawille-canvas figlet
 ```
+
+## Controls
+
+| Key | Action |
+|---|---|
+| Left Arrow | Move ship left |
+| Right Arrow | Move ship right |
+| Spacebar | Shoot bullet |
+| R | Restart game after game over |
+| CTRL+C | Quit application |
+
 
 ## Overview
 
@@ -39,29 +56,26 @@ Aliens, bullets, and the player ship are drawn on layered drawille canvases and 
 - `terminal-kit` (terminal control, color output, input handling)
 - `figlet` (ASCII art Headers and GAME OVER text)
 
-## Installation
-
-```bash
-git clone <your-repo-url>
-cd Terminal-invaders
-npm install terminal-kit drawille-canvas figlet
-```
-
-## Controls
-
-| Key | Action |
-|---|---|
-| Left Arrow | Move ship left |
-| Right Arrow | Move ship right |
-| Spacebar | Shoot bullet |
-| R | Restart game after game over |
-| CTRL+C | Quit application |
 
 ## Technical Highlights
 
-- Layering strategy: ship, aliens, and bullets are rendered to separate canvas layers to avoid color bleeding, then merged in a single terminal output pass.
-- Game over centering: custom multi-line centering logic draws a figlet `GAME OVER` block and score message in the center overlay and leaves the playfield visible behind.
-- Efficient update loop: `setTimeout` at 40ms gives a consistent ~25 updates per second, ensuring responsive input and fluid movement.
+- Layering strategy avoids color bleed by rendering ship, aliens and bullets on separate layers before compositing.
+- Custom center alignment logic draws the figlet `GAME OVER` screen with floating overlay text.
+- 40ms frame loop supports smooth gameplay and responsive control.
+
+## Contribution Guide
+
+Thank you for considering enhancement of `TERMINAL INVADERS`!
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/your-feature`.
+3. Install dependencies and run the game to verify behavior.
+4. Make your code changes and keep them focused (gameplay, UI, docs, bug fixes).
+5. Add or update tests/docs as needed.
+6. Commit with a clear message and push to your fork.
+7. Open a pull request with a summary and testing notes.
+
+> We appreciate clean code, minimal side effects, and user-friendly controls.
 
 ## Running
 
