@@ -27,8 +27,12 @@ let score = 0;
 let gameOver = false;
 let alienVelocityX = 1;
 
-//Drawing Char
+const INITIAL_ALIEN_ROWS = 2;
+const ALIEN_COLS = 5;
+const MAX_ALIEN_ROWS = 5;
+let currentAlienRows = INITIAL_ALIEN_ROWS;
 
+//Drawing Char
 function drawShip(ctx, x, y) {
   ctx.fillRect(x + 4, y, 2, 2); // Cannon tip
   ctx.fillRect(x + 4, y, 2, 2); // Cannon tip
@@ -75,17 +79,10 @@ function init() {
   gameLoop();
 }
 
-function resetGame() {
-  ship.x = 75;
+function spawnAliens(rows = INITIAL_ALIEN_ROWS, cols = ALIEN_COLS) {
   alienArray = [];
-  bulletArray = [];
-  score = 0;
-  gameOver = false;
-  alienVelocityX = 1;
-
-  // Create classic 3x5 grid
-  for (let r = 0; r < 3; r++) {
-    for (let c = 0; c < 6; c++) {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
       alienArray.push({
         x: c * (alienWidth + 6) + 20,
         y: r * (alienHeight + 4) + 10,
@@ -95,6 +92,17 @@ function resetGame() {
       });
     }
   }
+}
+
+function resetGame() {
+  ship.x = 75;
+  bulletArray = [];
+  score = 0;
+  gameOver = false;
+  alienVelocityX = 1;
+  currentAlienRows = INITIAL_ALIEN_ROWS;
+
+  spawnAliens(currentAlienRows, ALIEN_COLS);
 }
 
 function clampShip() {
@@ -140,7 +148,15 @@ function update() {
   bulletArray = bulletArray.filter((b) => b.y > 0 && !b.used);
 
   // Check for Win
-  if (alienArray.every((a) => !a.alive)) resetGame();
+  if (alienArray.every((a) => !a.alive)) {
+    if (currentAlienRows < MAX_ALIEN_ROWS) {
+      currentAlienRows++;
+    }
+
+    bulletArray = [];
+    alienVelocityX = 1;
+    spawnAliens(currentAlienRows, ALIEN_COLS);
+  }
 }
 
 function draw() {
