@@ -1,7 +1,7 @@
 {
   "name": "terminal-invaders",
   "version": "1.0.1",
-  "description": "terminal invaders game that runs at your terminal",
+  "description": "A retro-style Space Invaders game for the terminal using Braille graphics.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/Dru-429/Terminal-invade.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "space-invaders",
+    "terminal-invaders",
+    "terminal-game",
+    "cli-game",
+    "retro",
+    "braille-graphics",
+    "drawille",
+    "terminal-kit"
+  ],
+  "author": "Dhruv Sahoo",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {

@@ -13,7 +13,7 @@ npm i terminal-invaders
 ### Install from source (bash)
 
 ```bash
-git clone <your-repo-url>
+git clone "https://github.com/Dru-429/Terminal-invaders"
 cd Terminal-invaders
 npm install terminal-kit drawille-canvas figlet
 ```
