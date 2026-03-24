@@ -35,7 +35,7 @@ npm install terminal-kit drawille-canvas figlet
 
 Aliens, bullets, and the player ship are drawn on layered drawille canvases and composited together with colorful terminal-kit output. This is a nostalgic Space Invaders clone with modern Node.js tooling for an immediate plug-and-play CLI experience.
 
-![Uploading image.png…]()
+
 
 ## Features
 
