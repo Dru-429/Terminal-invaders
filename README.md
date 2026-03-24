@@ -8,6 +8,12 @@
 
 ```bash
 npm i terminal-invaders
+npx terminal-invaders
+```
+or
+
+```bash
+npm install -g terminal-invaders
 ```
 
 ### Install from source (bash)
