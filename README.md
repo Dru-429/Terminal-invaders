@@ -37,6 +37,11 @@ npm install terminal-kit drawille-canvas figlet
 
 ## Overview
 
+<img width="651" height="378" alt="Screenshot 2026-03-24 125451" src="https://github.com/user-attachments/assets/7cb77dbe-444d-4fbb-aa8c-09c0383cedc4" />
+
+<img width="762" height="490" alt="Screenshot 2026-03-24 122050" src="https://github.com/user-attachments/assets/65dd0c4d-9ac7-4087-b32d-e1ea7e827463" />
+
+
 `Terminal Invaders` is a retro-style shooter built 100% for the command line. It uses Braille-character rendering to achieve higher visual fidelity within a text console, delivering smooth pixel-like animation in a terminal window.
 
 Aliens, bullets, and the player ship are drawn on layered drawille canvases and composited together with colorful terminal-kit output. This is a nostalgic Space Invaders clone with modern Node.js tooling for an immediate plug-and-play CLI experience.
