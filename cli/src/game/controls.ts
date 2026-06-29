@@ -1,5 +1,5 @@
 import pkg from "terminal-kit";
-import { gameOver, ship } from "./state.js";
+import { game } from "./state.js";
 
 const { terminal: term } = pkg;
 
@@ -7,15 +7,15 @@ export function setupControls(resetGame: () => void, clampShip: () => void) {
   term.on("key", (name: string) => {
     if (name === "CTRL_C") process.exit();
 
-    if (gameOver && (name === "r" || name === "R")) {
+    if (game.gameOver && (name === "r" || name === "R")) {
       resetGame();
       return;
     }
 
-    if (gameOver) return;
+    if (game.gameOver) return;
 
-    if (name === "LEFT") ship.x -= 4;
-    if (name === "RIGHT") ship.x += 4;
+    if (name === "LEFT") game.ship.x -= 4;
+    if (name === "RIGHT") game.ship.x += 4;
 
     clampShip();
   });

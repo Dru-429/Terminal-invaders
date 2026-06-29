@@ -1,4 +1,6 @@
 import pkg from "terminal-kit";
+import figlet from "figlet";
+import chalk from "chalk";
 import {
   alienCanvas,
   alienCtx,
@@ -6,98 +8,120 @@ import {
   shipCtx,
   nukeCanvas,
   nukeCtx,
-  alienArray,
-  bulletArray,
-  nukeArray,
-  ship,
+  game,
+  BOUNDARY_MIN_X,
+  BOUNDARY_MAX_X,
+  BOUNDARY_MIN_Y,
+  BOUNDARY_MAX_Y,
 } from "./state.js";
-
 import { drawShip } from "./ship.js";
 import { drawAlien } from "./aliens.js";
 import { drawNukes } from "./nukes.js";
 
 const { terminal: term } = pkg;
 
-function drawBullets() {
-  bulletArray.forEach((bullet) => {
-    alienCtx.fillRect(bullet.x, bullet.y, 1, 3);
-  });
+function isBlank(char: string | undefined): boolean {
+  return !char || char === " " || char === "\u2800";
 }
 
-function drawAliens() {
-  alienArray.forEach((alien) => {
-    if (!alien.alive) return;
-    drawAlien(alienCtx, alien.x, alien.y);
-  });
-}
-
-function clearCanvases() {
+export function render(): void {
   alienCtx.clearRect(0, 0, 160, 80);
   shipCtx.clearRect(0, 0, 160, 80);
   nukeCtx.clearRect(0, 0, 160, 80);
-}
 
-function drawBorders() {
-  term.moveTo(1, 1);
-  term.white("╔" + "═".repeat(80) + "╗");
+  shipCtx.fillRect(
+    BOUNDARY_MIN_X,
+    BOUNDARY_MIN_Y,
+    BOUNDARY_MAX_X - BOUNDARY_MIN_X,
+    1
+  );
+  shipCtx.fillRect(
+    BOUNDARY_MIN_X,
+    BOUNDARY_MAX_Y,
+    BOUNDARY_MAX_X - BOUNDARY_MIN_X,
+    1
+  );
+  shipCtx.fillRect(
+    BOUNDARY_MIN_X,
+    BOUNDARY_MIN_Y,
+    1,
+    BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
+  );
+  shipCtx.fillRect(
+    BOUNDARY_MAX_X,
+    BOUNDARY_MIN_Y,
+    1,
+    BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
+  );
 
-  for (let i = 2; i <= 39; i++) {
-    term.moveTo(1, i);
-    term.white("║");
-    term.moveTo(82, i);
-    term.white("║");
-  }
+  game.alienArray.forEach((alien) => {
+    if (alien.alive) drawAlien(alienCtx, alien.x, alien.y);
+  });
 
-  term.moveTo(1, 40);
-  term.white("╚" + "═".repeat(80) + "╝");
-}
+  drawShip(shipCtx, game.ship.x, game.ship.y);
 
-function drawHUD(score: number) {
-  term.moveTo(85, 3);
-  term.green(`Score: ${score}`);
+  game.bulletArray.forEach((bullet) => {
+    shipCtx.fillRect(bullet.x, bullet.y, 1, 3);
+  });
 
-  term.moveTo(85, 5);
-  term.yellow(`Bullets: ${bulletArray.length}`);
-
-  term.moveTo(85, 7);
-  term.red(`Aliens: ${alienArray.length}`);
-}
-
-function drawGameOver(score: number) {
-  term.moveTo(30, 18);
-  term.red.bold("GAME OVER");
-
-  term.moveTo(27, 20);
-  term.white(`Final Score: ${score}`);
-
-  term.moveTo(23, 22);
-  term.yellow("Press R to Restart");
-}
-
-export function render(score: number, gameOver: boolean) {
-  term.clear();
-
-  clearCanvases();
-
-  drawBorders();
-
-  drawShip(shipCtx, ship.x, ship.y);
-  drawAliens();
-  drawBullets();
   drawNukes(nukeCtx);
 
-  drawHUD(score);
+  const alienLines = alienCanvas.toString().split("\n");
+  const shipLines = shipCanvas.toString().split("\n");
+  const nukeLines = nukeCanvas.toString().split("\n");
 
-  term.moveTo(3, 2);
-  term(shipCanvas.frame());
+  const maxLines = Math.max(
+    alienLines.length,
+    shipLines.length,
+    nukeLines.length
+  );
 
-  term.moveTo(3, 2);
-  term(alienCanvas.frame());
+  let rendered = "";
 
-  term.moveTo(3, 2);
-  term(nukeCanvas.frame());
+  for (let y = 0; y < maxLines; y++) {
+    const aLine = alienLines[y] || "";
+    const sLine = shipLines[y] || "";
+    const nLine = nukeLines[y] || "";
 
-  if (gameOver) {
-    drawGameOver(score);
+    const maxCols = Math.max(aLine.length, sLine.length, nLine.length);
+
+    for (let x = 0; x < maxCols; x++) {
+      const sChar = sLine[x];
+      const aChar = aLine[x];
+      const nChar = nLine[x];
+
+      if (!isBlank(sChar)) {
+        rendered += chalk.yellow(sChar);
+      } else if (!isBlank(nChar)) {
+        if (y > 0 && isBlank(nLine[x])) {
+          rendered += chalk.magenta(nChar);
+        } else {
+          rendered += chalk.red(nChar);
+        }
+      } else if (!isBlank(aChar)) {
+        rendered += chalk.white(aChar);
+      } else {
+        rendered += " ";
+      }
+    }
+
+    rendered += "\n";
+  }
+
+  term.moveTo(1, 1);
+  process.stdout.write(rendered);
+
+  term.moveTo(9, 2).white("← → Move | Auto Fire | R Restart");
+  term
+    .moveTo(2, 1)
+    .brightYellow(` SCORE: ${String(game.score).padStart(5, "0")} `);
+
+  if (game.gameOver) {
+    const msg = figlet.textSync("GAME OVER");
+    const lines = msg.split("\n");
+
+    lines.forEach((line, index) => {
+      term.moveTo(10, 6 + index).red(line);
+    });
   }
 }

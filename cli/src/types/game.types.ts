@@ -18,7 +18,6 @@ export interface Bullet {
   y: number;
   used: boolean;
 }
-
 export interface Nuke {
   x: number;
   y: number;

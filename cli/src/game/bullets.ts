@@ -1,13 +1,18 @@
-import { ship, bulletArray,AUTO_FIRE_INTERVAL, lastShotTime } from "./state.js";
+import { game, AUTO_FIRE_INTERVAL } from "./state.js";
 
-export function shoot() {
+export function shoot(): void {
   const now = Date.now();
 
-  if (now - lastShotTime >= AUTO_FIRE_INTERVAL && bulletArray.length < 6) {
-    bulletArray.push({
-      x: ship.x + 5,
-      y: ship.y,
+  if (
+    now - game.lastShotTime >= AUTO_FIRE_INTERVAL &&
+    game.bulletArray.length < 6
+  ) {
+    game.bulletArray.push({
+      x: game.ship.x + 5,
+      y: game.ship.y,
       used: false,
     });
+
+    game.lastShotTime = now;
   }
 }

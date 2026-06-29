@@ -1,4 +1,4 @@
-import { Alien, Bullet, Nuke, Ship } from "../types/game.types";
+import type { Alien, Bullet, Nuke, Ship } from "../types/game.types.js";
 
 export function detectCollision(bullet: Bullet, alien: Alien): boolean {
   return (
@@ -8,7 +8,6 @@ export function detectCollision(bullet: Bullet, alien: Alien): boolean {
     bullet.y + 3 > alien.y
   );
 }
-
 export function detectShipCollision(nuke: Nuke, ship: Ship): boolean {
   return (
     nuke.x < ship.x + ship.width &&

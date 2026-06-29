@@ -1,15 +1,7 @@
 import {
-  alienArray,
-  bulletArray,
-  nukeArray,
-  ship,
-  score,
-  gameOver,
-  alienVelocityX,
-  lastAlienSpawn,
+  game,
   BOUNDARY_MIN_X,
   BOUNDARY_MAX_X,
-  BOUNDARY_MIN_Y,
   BOUNDARY_MAX_Y,
   INITIAL_ALIEN_ROWS,
   ALIEN_COLS,
@@ -19,31 +11,23 @@ import {
   alienWidth,
   alienHeight,
 } from "./state.js";
-
 import { detectCollision, detectShipCollision } from "./collision.js";
 import { render } from "./renderer.js";
 import { shoot } from "./bullets.js";
-import { Alien } from "../types/game.types.js";
 
-
-let currentScore = score;
-let currentGameOver = gameOver;
-let currentAlienVelocityX = alienVelocityX;
-let currentLastAlienSpawn = lastAlienSpawn;
-
-export function clampShip() {
-  if (ship.x < BOUNDARY_MIN_X) ship.x = BOUNDARY_MIN_X;
-  if (ship.x + ship.width > BOUNDARY_MAX_X) {
-    ship.x = BOUNDARY_MAX_X - ship.width;
-  }
+export function clampShip(): void {
+  game.ship.x = Math.max(
+    BOUNDARY_MIN_X,
+    Math.min(game.ship.x, BOUNDARY_MAX_X - game.ship.width)
+  );
 }
 
-function createAlienSwarm(rows: number) {
+function spawnAliens(rows: number = 1, cols: number = ALIEN_COLS): void {
   for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < ALIEN_COLS; c++) {
-      alienArray.push({
-        x: 20 + c * 20,
-        y: 10 + r * 10,
+    for (let c = 0; c < cols; c++) {
+      game.alienArray.push({
+        x: c * (alienWidth + 6) + 20,
+        y: 8 + r * (alienHeight + 4),
         width: alienWidth,
         height: alienHeight,
         alive: true,
@@ -52,152 +36,118 @@ function createAlienSwarm(rows: number) {
   }
 }
 
-function spawnAliens() {
-  const now = Date.now();
+function pushAlienSwarmDown(): void {
+  game.alienArray.forEach((alien) => {
+    if (!alien.alive) return;
 
-  if (now - currentLastAlienSpawn >= ALIEN_SPAWN_INTERVAL) {
-    createAlienSwarm(1);
-    currentLastAlienSpawn = now;
-  }
-}
+    alien.y += alienHeight + 4;
 
-function pushAlienSwarmDown() {
-  alienArray.forEach((alien) => {
-    alien.y += 4;
+    if (alien.y >= game.ship.y - 4) {
+      game.gameOver = true;
+    }
   });
-
-  currentAlienVelocityX *= -1;
 }
 
-function dropNuke(alien: Alien) {
+function dropNuke(): void {
+  const aliveAliens = game.alienArray.filter((alien) => alien.alive);
+
+  if (aliveAliens.length === 0) return;
+
   if (Math.random() < NUKE_DROP_CHANCE) {
-    nukeArray.push({
-      x: alien.x + alien.width / 2,
-      y: alien.y + alien.height,
+    const randomAlien =
+      aliveAliens[Math.floor(Math.random() * aliveAliens.length)];
+
+    if (!randomAlien) return;
+
+    game.nukeArray.push({
+      x: randomAlien.x + Math.floor(randomAlien.width / 2),
+      y: randomAlien.y + randomAlien.height,
       used: false,
     });
   }
 }
 
-function updateAliens() {
+function update(): void {
+  if (game.gameOver) return;
+
+  clampShip();
+  shoot();
+  dropNuke();
+
   let hitWall = false;
 
-  alienArray.forEach((alien) => {
+  game.alienArray.forEach((alien) => {
     if (!alien.alive) return;
 
-    alien.x += currentAlienVelocityX;
+    alien.x += game.alienVelocityX;
 
     if (
-      alien.x <= BOUNDARY_MIN_X ||
-      alien.x + alien.width >= BOUNDARY_MAX_X
+      alien.x + alien.width >= BOUNDARY_MAX_X ||
+      alien.x <= BOUNDARY_MIN_X
     ) {
       hitWall = true;
     }
 
-    if (alien.y + alien.height >= ship.y) {
-      currentGameOver = true;
+    if (alien.y >= game.ship.y) {
+      game.gameOver = true;
     }
-
-    dropNuke(alien);
   });
 
   if (hitWall) {
-    pushAlienSwarmDown();
+    game.alienVelocityX *= -1;
   }
-}
 
-function updateBullets() {
-  bulletArray.forEach((bullet) => {
-    if (bullet.used) return;
+  game.alienVelocityX *= 1.0005;
 
+  game.bulletArray.forEach((bullet) => {
     bullet.y -= 3;
 
-    if (bullet.y <= BOUNDARY_MIN_Y) {
-      bullet.used = true;
-    }
-  });
-
-  for (const bullet of bulletArray) {
-    for (const alien of alienArray) {
-      if (!alien.alive || bullet.used) continue;
-
-      if (detectCollision(bullet, alien)) {
+    game.alienArray.forEach((alien) => {
+      if (alien.alive && !bullet.used && detectCollision(bullet, alien)) {
         alien.alive = false;
         bullet.used = true;
-        currentScore += 10;
+        game.score += 100;
       }
-    }
-  }
+    });
+  });
 
-  for (let i = bulletArray.length - 1; i >= 0; i--) {
-    if (bulletArray[i].used) {
-      bulletArray.splice(i, 1);
-    }
-  }
-}
-
-function updateNukes() {
-  nukeArray.forEach((nuke) => {
-    if (nuke.used) return;
-
+  game.nukeArray.forEach((nuke) => {
     nuke.y += NUKE_SPEED;
 
-    if (nuke.y >= BOUNDARY_MAX_Y) {
-      nuke.used = true;
-    }
-
-    if (detectShipCollision(nuke, ship)) {
-      nuke.used = true;
-      currentGameOver = true;
+    if (detectShipCollision(nuke, game.ship)) {
+      game.gameOver = true;
     }
   });
 
-  for (let i = nukeArray.length - 1; i >= 0; i--) {
-    if (nukeArray[i].used) {
-      nukeArray.splice(i, 1);
-    }
+  game.bulletArray = game.bulletArray.filter((b) => b.y > 0 && !b.used);
+  game.alienArray = game.alienArray.filter((a) => a.alive);
+  game.nukeArray = game.nukeArray.filter(
+    (n) => n.y < BOUNDARY_MAX_Y && !n.used
+  );
+
+  if (Date.now() - game.lastAlienSpawn >= ALIEN_SPAWN_INTERVAL) {
+    pushAlienSwarmDown();
+    spawnAliens(1);
+    game.lastAlienSpawn = Date.now();
   }
 }
 
-function cleanupAliens() {
-  for (let i = alienArray.length - 1; i >= 0; i--) {
-    if (!alienArray[i].alive) {
-      alienArray.splice(i, 1);
-    }
-  }
+export function resetGame(): void {
+  game.ship.x = 75;
+  game.bulletArray = [];
+  game.alienArray = [];
+  game.nukeArray = [];
+
+  game.score = 0;
+  game.gameOver = false;
+  game.alienVelocityX = 1;
+
+  spawnAliens(INITIAL_ALIEN_ROWS);
+  game.lastAlienSpawn = Date.now();
 }
 
-function update() {
-  if (currentGameOver) return;
-
-  shoot();
-
-  updateAliens();
-  updateBullets();
-  updateNukes();
-  cleanupAliens();
-  spawnAliens();
-}
-
-export function resetGame() {
-  alienArray.length = 0;
-  bulletArray.length = 0;
-  nukeArray.length = 0;
-
-  ship.x = 75;
-  ship.y = 70;
-
-  currentScore = 0;
-  currentGameOver = false;
-  currentAlienVelocityX = 1;
-  currentLastAlienSpawn = Date.now();
-
-  createAlienSwarm(INITIAL_ALIEN_ROWS);
-}
-
-export function gameLoop() {
+export function gameLoop(): void {
   update();
-  render(currentScore, currentGameOver);
-
-  setTimeout(gameLoop, 50);
+  render();
+  setTimeout(gameLoop, 40);
 }
