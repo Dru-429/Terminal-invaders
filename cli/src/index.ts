@@ -45,6 +45,9 @@ const BOUNDARY_MAX_Y = 78;
 const INITIAL_ALIEN_ROWS = 2;
 const ALIEN_COLS = 5;
 const ALIEN_SPAWN_INTERVAL = 2500;
+const AUTO_FIRE_INTERVAL = 250; // fires every 250ms
+let lastShotTime = Date.now();
+
 
 // Game State
 let ship: Ship = {
@@ -102,8 +105,6 @@ function init(): void {
     if (name === "RIGHT") ship.x += 4;
 
     clampShip();
-
-    if (name === " ") shoot();
   });
 
   resetGame();
@@ -163,6 +164,7 @@ function update(): void {
   if (gameOver) return;
 
   clampShip();
+  shoot();
 
   let hitWall = false;
 
@@ -324,12 +326,19 @@ function draw(): void {
 
 // Shoot
 function shoot(): void {
-  if (bulletArray.length < 3) {
+  const now = Date.now();
+
+  if (
+    now - lastShotTime >= AUTO_FIRE_INTERVAL &&
+    bulletArray.length < 6
+  ) {
     bulletArray.push({
       x: ship.x + 5,
       y: ship.y,
       used: false,
     });
+
+    lastShotTime = now;
   }
 }
 
