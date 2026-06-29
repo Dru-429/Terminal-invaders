@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { terminal as term } from "terminal-kit";
+import pkg from 'terminal-kit';
 import Canvas from "drawille-canvas";
 import figlet from "figlet";
 import chalk from "chalk";
@@ -28,9 +28,8 @@ interface Bullet {
 }
 
 const canvas = new Canvas(160, 80);
-// Using 'any' type conversion for custom canvas context if types are unexported
 const ctx = canvas.getContext("2d") as any;
-
+const { terminal: term} = pkg;
 const alienCanvas = new Canvas(160, 80);
 const alienCtx = alienCanvas.getContext("2d") as any;
 const shipCanvas = new Canvas(160, 80);
@@ -40,7 +39,9 @@ const BOUNDARY_MIN_X = 5;
 const BOUNDARY_MAX_X = 155;
 const BOUNDARY_MIN_Y = 2;
 const BOUNDARY_MAX_Y = 78;
+const ALIEN_SPAWN_INTERVAL = 2500; // every 2.5s
 
+let lastAlienSpawn = Date.now();
 let ship: Ship = { x: 75, y: 70, width: 10, height: 5 };
 let alienWidth = 10;
 let alienHeight = 6;
@@ -95,13 +96,12 @@ function init(): void {
   gameLoop();
 }
 
-function spawnAliens(rows: number = INITIAL_ALIEN_ROWS, cols: number = ALIEN_COLS): void {
-  alienArray = [];
+function spawnAliens(rows: number = 1, cols: number = ALIEN_COLS): void {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       alienArray.push({
         x: c * (alienWidth + 6) + 20,
-        y: r * (alienHeight + 4) + 10,
+        y: 8 + r * (alienHeight + 4),
         width: alienWidth,
         height: alienHeight,
         alive: true,
