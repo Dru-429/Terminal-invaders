@@ -100,14 +100,24 @@ function drawAlien(ctx: any, x: number, y: number): void {
 
 function drawNukes(ctx: any): void {
   nukeArray.forEach((nuke) => {
-    // flame
-    ctx.fillRect(nuke.x, nuke.y - 2, 2, 2);
+    
+    // Flame trail (now at the very top of the sprite)
+    ctx.fillRect(nuke.x + 1, nuke.y, 1, 2);
 
-    // body
-    ctx.fillRect(nuke.x, nuke.y, 2, 4);
+    // Tail fins (positioned at the top section of the body)
+    ctx.fillRect(nuke.x - 1, nuke.y + 2, 1, 1);
+    ctx.fillRect(nuke.x + 3, nuke.y + 2, 1, 1);
+
+    // Main body (remains in the middle block)
+    ctx.fillRect(nuke.x, nuke.y + 2, 3, 3);
+
+    // Lower cone (tapering down towards the tip)
+    ctx.fillRect(nuke.x, nuke.y + 5, 3, 1);
+
+    // Nose (pointy tip now facing down at the bottom)
+    ctx.fillRect(nuke.x + 1, nuke.y + 6, 1, 1);
   });
 }
-
 // Init
 function init(): void {
   term.fullscreen(true);
@@ -406,7 +416,7 @@ function detectCollision(bullet: Bullet, alien: Alien): boolean {
   );
 }
 
-// Nuke vs Ship collision
+// Nuke collision
 function detectShipCollision(nuke: Nuke, ship: Ship): boolean {
   return (
     nuke.x < ship.x + ship.width &&
