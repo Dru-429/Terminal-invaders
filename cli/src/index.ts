@@ -27,6 +27,12 @@ interface Bullet {
   used: boolean;
 }
 
+interface Nuke {
+  x: number;
+  y: number;
+  used: boolean;
+}
+
 const { terminal: term } = pkg;
 
 const alienCanvas = new Canvas(160, 80);
@@ -45,9 +51,12 @@ const BOUNDARY_MAX_Y = 78;
 const INITIAL_ALIEN_ROWS = 2;
 const ALIEN_COLS = 5;
 const ALIEN_SPAWN_INTERVAL = 2500;
-const AUTO_FIRE_INTERVAL = 250; // fires every 250ms
-let lastShotTime = Date.now();
+const AUTO_FIRE_INTERVAL = 250;
 
+const NUKE_DROP_CHANCE = 0.015;
+const NUKE_SPEED = 2;
+
+let lastShotTime = Date.now();
 
 // Game State
 let ship: Ship = {
@@ -62,6 +71,7 @@ let alienHeight = 6;
 
 let alienArray: Alien[] = [];
 let bulletArray: Bullet[] = [];
+let nukeArray: Nuke[] = [];
 
 let score = 0;
 let gameOver = false;
@@ -111,7 +121,7 @@ function init(): void {
   gameLoop();
 }
 
-// Spawn Aliens (Continuous)
+// Spawn Aliens
 function spawnAliens(rows: number = 1, cols: number = ALIEN_COLS): void {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -126,7 +136,7 @@ function spawnAliens(rows: number = 1, cols: number = ALIEN_COLS): void {
   }
 }
 
-// Push swarm down when new row enters
+// Push swarm down
 function pushAlienSwarmDown(): void {
   alienArray.forEach((alien) => {
     if (!alien.alive) return;
@@ -139,10 +149,30 @@ function pushAlienSwarmDown(): void {
   });
 }
 
+// Drop nuke randomly
+function dropNuke(): void {
+  const aliveAliens = alienArray.filter((alien) => alien.alive);
+
+  if (aliveAliens.length === 0) return;
+
+  if (Math.random() < NUKE_DROP_CHANCE) {
+    const randomAlien =
+      aliveAliens[Math.floor(Math.random() * aliveAliens.length)];
+
+    if (!randomAlien) return;
+
+    nukeArray.push({
+      x: randomAlien.x + Math.floor(randomAlien.width / 2),
+      y: randomAlien.y + randomAlien.height,
+      used: false,
+    });
+  }
+}
 function resetGame(): void {
   ship.x = 75;
   bulletArray = [];
   alienArray = [];
+  nukeArray = [];
 
   score = 0;
   gameOver = false;
@@ -165,6 +195,7 @@ function update(): void {
 
   clampShip();
   shoot();
+  dropNuke();
 
   let hitWall = false;
 
@@ -183,12 +214,10 @@ function update(): void {
     }
   });
 
-  // Wall bounce
   if (hitWall) {
     alienVelocityX *= -1;
   }
 
-  // Speed ramp
   alienVelocityX *= 1.0005;
 
   // Bullets
@@ -204,9 +233,19 @@ function update(): void {
     });
   });
 
+  // Nukes
+  nukeArray.forEach((nuke) => {
+    nuke.y += NUKE_SPEED;
+
+    if (detectShipCollision(nuke, ship)) {
+      gameOver = true;
+    }
+  });
+
   // Cleanup
   bulletArray = bulletArray.filter((b) => b.y > 0 && !b.used);
   alienArray = alienArray.filter((a) => a.alive);
+  nukeArray = nukeArray.filter((n) => n.y < BOUNDARY_MAX_Y && !n.used);
 
   // Continuous spawn
   if (Date.now() - lastAlienSpawn >= ALIEN_SPAWN_INTERVAL) {
@@ -222,58 +261,36 @@ function draw(): void {
   shipCtx.clearRect(0, 0, 160, 80);
 
   // Boundary
-  shipCtx.fillRect(
-    BOUNDARY_MIN_X,
-    BOUNDARY_MIN_Y,
-    BOUNDARY_MAX_X - BOUNDARY_MIN_X,
-    1
-  );
+  shipCtx.fillRect(BOUNDARY_MIN_X, BOUNDARY_MIN_Y, BOUNDARY_MAX_X - BOUNDARY_MIN_X, 1);
+  shipCtx.fillRect(BOUNDARY_MIN_X, BOUNDARY_MAX_Y, BOUNDARY_MAX_X - BOUNDARY_MIN_X, 1);
+  shipCtx.fillRect(BOUNDARY_MIN_X, BOUNDARY_MIN_Y, 1, BOUNDARY_MAX_Y - BOUNDARY_MIN_Y);
+  shipCtx.fillRect(BOUNDARY_MAX_X, BOUNDARY_MIN_Y, 1, BOUNDARY_MAX_Y - BOUNDARY_MIN_Y);
 
-  shipCtx.fillRect(
-    BOUNDARY_MIN_X,
-    BOUNDARY_MAX_Y,
-    BOUNDARY_MAX_X - BOUNDARY_MIN_X,
-    1
-  );
-
-  shipCtx.fillRect(
-    BOUNDARY_MIN_X,
-    BOUNDARY_MIN_Y,
-    1,
-    BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
-  );
-
-  shipCtx.fillRect(
-    BOUNDARY_MAX_X,
-    BOUNDARY_MIN_Y,
-    1,
-    BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
-  );
-
-  // Draw aliens
   alienArray.forEach((alien) => {
-    if (alien.alive) {
-      drawAlien(alienCtx, alien.x, alien.y);
-    }
+    if (alien.alive) drawAlien(alienCtx, alien.x, alien.y);
   });
 
-  // Draw ship
   drawShip(shipCtx, ship.x, ship.y);
 
-  // Draw bullets
   bulletArray.forEach((bullet) => {
     shipCtx.fillRect(bullet.x, bullet.y, 1, 3);
   });
 
+  // Draw nukes (red body + orange flame)
+  nukeArray.forEach((nuke) => {
+    shipCtx.fillStyle = "orange";
+    shipCtx.fillRect(nuke.x, nuke.y - 2, 2, 2);
+
+    shipCtx.fillStyle = "red";
+    shipCtx.fillRect(nuke.x, nuke.y, 2, 4);
+  });
+
   const alienLines = alienCanvas.toString().split("\n");
   const shipLines = shipCanvas.toString().split("\n");
-
   const maxLines = Math.max(alienLines.length, shipLines.length);
 
   function isBlank(char: string | undefined): boolean {
-    return (
-      char === undefined || char === "" || char === " " || char === "\u2800"
-    );
+    return !char || char === " " || char === "\u2800";
   }
 
   let rendered = "";
@@ -302,14 +319,8 @@ function draw(): void {
   term.moveTo(1, 1);
   process.stdout.write(rendered);
 
-  // HUD
-  term
-    .moveTo(9, 2)
-    .white("SPACE to fire | ← → to move | Press R to restart");
-
-  term
-    .moveTo(2, 1)
-    .brightYellow(` SCORE: ${String(score).padStart(5, "0")} `);
+  term.moveTo(9, 2).white("← → Move | Auto Fire | R Restart");
+  term.moveTo(2, 1).brightYellow(` SCORE: ${String(score).padStart(5, "0")} `);
 
   if (gameOver) {
     const msg = figlet.textSync("GAME OVER");
@@ -318,20 +329,14 @@ function draw(): void {
     lines.forEach((line, index) => {
       term.moveTo(10, 6 + index).red(line);
     });
-
-    term.moveTo(34, 12).yellow(` SCORE: ${String(score).padStart(5, "0")} `);
-    term.moveTo(30, 14).yellow(" Press 'R' to Restart ");
   }
 }
 
-// Shoot
+// Auto fire
 function shoot(): void {
   const now = Date.now();
 
-  if (
-    now - lastShotTime >= AUTO_FIRE_INTERVAL &&
-    bulletArray.length < 6
-  ) {
+  if (now - lastShotTime >= AUTO_FIRE_INTERVAL && bulletArray.length < 6) {
     bulletArray.push({
       x: ship.x + 5,
       y: ship.y,
@@ -349,6 +354,16 @@ function detectCollision(bullet: Bullet, alien: Alien): boolean {
     bullet.x + 1 > alien.x &&
     bullet.y < alien.y + alien.height &&
     bullet.y + 3 > alien.y
+  );
+}
+
+// Nuke vs Ship collision
+function detectShipCollision(nuke: Nuke, ship: Ship): boolean {
+  return (
+    nuke.x < ship.x + ship.width &&
+    nuke.x + 2 > ship.x &&
+    nuke.y < ship.y + ship.height &&
+    nuke.y + 4 > ship.y
   );
 }
 
