@@ -41,6 +41,9 @@ const alienCtx = alienCanvas.getContext("2d") as any;
 const shipCanvas = new Canvas(160, 80);
 const shipCtx = shipCanvas.getContext("2d") as any;
 
+const nukeCanvas = new Canvas(160, 80);
+const nukeCtx = nukeCanvas.getContext("2d") as any;
+
 // Boundaries
 const BOUNDARY_MIN_X = 5;
 const BOUNDARY_MAX_X = 155;
@@ -93,6 +96,16 @@ function drawAlien(ctx: any, x: number, y: number): void {
   ctx.fillRect(x, y + 3, 11, 1);
   ctx.fillRect(x + 2, y + 4, 2, 1);
   ctx.fillRect(x + 7, y + 4, 2, 1);
+}
+
+function drawNukes(ctx: any): void {
+  nukeArray.forEach((nuke) => {
+    // flame
+    ctx.fillRect(nuke.x, nuke.y - 2, 2, 2);
+
+    // body
+    ctx.fillRect(nuke.x, nuke.y, 2, 4);
+  });
 }
 
 // Init
@@ -259,35 +272,59 @@ function update(): void {
 function draw(): void {
   alienCtx.clearRect(0, 0, 160, 80);
   shipCtx.clearRect(0, 0, 160, 80);
+  nukeCtx.clearRect(0, 0, 160, 80);
 
   // Boundary
-  shipCtx.fillRect(BOUNDARY_MIN_X, BOUNDARY_MIN_Y, BOUNDARY_MAX_X - BOUNDARY_MIN_X, 1);
-  shipCtx.fillRect(BOUNDARY_MIN_X, BOUNDARY_MAX_Y, BOUNDARY_MAX_X - BOUNDARY_MIN_X, 1);
-  shipCtx.fillRect(BOUNDARY_MIN_X, BOUNDARY_MIN_Y, 1, BOUNDARY_MAX_Y - BOUNDARY_MIN_Y);
-  shipCtx.fillRect(BOUNDARY_MAX_X, BOUNDARY_MIN_Y, 1, BOUNDARY_MAX_Y - BOUNDARY_MIN_Y);
+  shipCtx.fillRect(
+    BOUNDARY_MIN_X,
+    BOUNDARY_MIN_Y,
+    BOUNDARY_MAX_X - BOUNDARY_MIN_X,
+    1
+  );
+  shipCtx.fillRect(
+    BOUNDARY_MIN_X,
+    BOUNDARY_MAX_Y,
+    BOUNDARY_MAX_X - BOUNDARY_MIN_X,
+    1
+  );
+  shipCtx.fillRect(
+    BOUNDARY_MIN_X,
+    BOUNDARY_MIN_Y,
+    1,
+    BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
+  );
+  shipCtx.fillRect(
+    BOUNDARY_MAX_X,
+    BOUNDARY_MIN_Y,
+    1,
+    BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
+  );
 
+  // Aliens
   alienArray.forEach((alien) => {
     if (alien.alive) drawAlien(alienCtx, alien.x, alien.y);
   });
 
+  // Ship
   drawShip(shipCtx, ship.x, ship.y);
 
+  // Bullets
   bulletArray.forEach((bullet) => {
     shipCtx.fillRect(bullet.x, bullet.y, 1, 3);
   });
 
-  // Draw nukes (red body + orange flame)
-  nukeArray.forEach((nuke) => {
-    shipCtx.fillStyle = "orange";
-    shipCtx.fillRect(nuke.x, nuke.y - 2, 2, 2);
-
-    shipCtx.fillStyle = "red";
-    shipCtx.fillRect(nuke.x, nuke.y, 2, 4);
-  });
+  // Nukes
+  drawNukes(nukeCtx);
 
   const alienLines = alienCanvas.toString().split("\n");
   const shipLines = shipCanvas.toString().split("\n");
-  const maxLines = Math.max(alienLines.length, shipLines.length);
+  const nukeLines = nukeCanvas.toString().split("\n");
+
+  const maxLines = Math.max(
+    alienLines.length,
+    shipLines.length,
+    nukeLines.length
+  );
 
   function isBlank(char: string | undefined): boolean {
     return !char || char === " " || char === "\u2800";
@@ -298,14 +335,24 @@ function draw(): void {
   for (let y = 0; y < maxLines; y++) {
     const aLine = alienLines[y] || "";
     const sLine = shipLines[y] || "";
-    const maxCols = Math.max(aLine.length, sLine.length);
+    const nLine = nukeLines[y] || "";
+
+    const maxCols = Math.max(aLine.length, sLine.length, nLine.length);
 
     for (let x = 0; x < maxCols; x++) {
       const sChar = sLine[x];
       const aChar = aLine[x];
+      const nChar = nLine[x];
 
       if (!isBlank(sChar)) {
         rendered += chalk.yellow(sChar);
+      } else if (!isBlank(nChar)) {
+        // top flame = orange
+        if (y > 0 && isBlank(nLine[x])) {
+          rendered += chalk.magenta(nChar);
+        } else {
+          rendered += chalk.red(nChar);
+        }
       } else if (!isBlank(aChar)) {
         rendered += chalk.white(aChar);
       } else {
@@ -320,7 +367,9 @@ function draw(): void {
   process.stdout.write(rendered);
 
   term.moveTo(9, 2).white("← → Move | Auto Fire | R Restart");
-  term.moveTo(2, 1).brightYellow(` SCORE: ${String(score).padStart(5, "0")} `);
+  term.moveTo(2, 1).brightYellow(
+    ` SCORE: ${String(score).padStart(5, "0")} `
+  );
 
   if (gameOver) {
     const msg = figlet.textSync("GAME OVER");
