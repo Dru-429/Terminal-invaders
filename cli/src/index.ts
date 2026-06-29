@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import pkg from 'terminal-kit';
+import pkg from "terminal-kit";
 import Canvas from "drawille-canvas";
 import figlet from "figlet";
 import chalk from "chalk";
 
-// Types & Interfaces
+// Types
 interface Ship {
   x: number;
   y: number;
@@ -27,55 +27,62 @@ interface Bullet {
   used: boolean;
 }
 
-const canvas = new Canvas(160, 80);
-const ctx = canvas.getContext("2d") as any;
-const { terminal: term} = pkg;
+const { terminal: term } = pkg;
+
 const alienCanvas = new Canvas(160, 80);
 const alienCtx = alienCanvas.getContext("2d") as any;
+
 const shipCanvas = new Canvas(160, 80);
 const shipCtx = shipCanvas.getContext("2d") as any;
 
+// Boundaries
 const BOUNDARY_MIN_X = 5;
 const BOUNDARY_MAX_X = 155;
 const BOUNDARY_MIN_Y = 2;
 const BOUNDARY_MAX_Y = 78;
-const ALIEN_SPAWN_INTERVAL = 2500; // every 2.5s
 
-let lastAlienSpawn = Date.now();
-let ship: Ship = { x: 75, y: 70, width: 10, height: 5 };
+// Game Constants
+const INITIAL_ALIEN_ROWS = 2;
+const ALIEN_COLS = 5;
+const ALIEN_SPAWN_INTERVAL = 2500;
+
+// Game State
+let ship: Ship = {
+  x: 75,
+  y: 70,
+  width: 10,
+  height: 5,
+};
+
 let alienWidth = 10;
 let alienHeight = 6;
+
 let alienArray: Alien[] = [];
 let bulletArray: Bullet[] = [];
+
 let score = 0;
 let gameOver = false;
 let alienVelocityX = 1;
+let lastAlienSpawn = Date.now();
 
-const INITIAL_ALIEN_ROWS = 2;
-const ALIEN_COLS = 5;
-const MAX_ALIEN_ROWS = 5;
-let currentAlienRows = INITIAL_ALIEN_ROWS;
-
-// Drawing Characters
+// Drawing Functions
 function drawShip(ctx: any, x: number, y: number): void {
-  ctx.fillRect(x + 4, y, 2, 2); // Cannon tip
-  ctx.fillRect(x + 4, y, 2, 2); // Cannon tip
-  ctx.fillRect(x + 2, y + 2, 6, 1); // Mid section
-  ctx.fillRect(x, y + 3, 10, 2); // Base
-  ctx.fillRect(x, y + 3, 10, 2); // Base
+  ctx.fillRect(x + 4, y, 2, 2);
+  ctx.fillRect(x + 2, y + 2, 6, 1);
+  ctx.fillRect(x, y + 3, 10, 2);
 }
 
 function drawAlien(ctx: any, x: number, y: number): void {
-  ctx.fillRect(x + 2, y, 1, 1); // Left antenna
-  ctx.fillRect(x + 8, y, 1, 1); // Right antenna
-  ctx.fillRect(x + 3, y + 1, 5, 1); // Top of head
-  ctx.fillRect(x + 1, y + 2, 9, 2); // Wide body row
-  ctx.fillRect(x, y + 3, 11, 1); // Arm row
-  ctx.fillRect(x + 2, y + 4, 2, 1); // Left foot
-  ctx.fillRect(x + 7, y + 4, 2, 1); // Right foot
+  ctx.fillRect(x + 2, y, 1, 1);
+  ctx.fillRect(x + 8, y, 1, 1);
+  ctx.fillRect(x + 3, y + 1, 5, 1);
+  ctx.fillRect(x + 1, y + 2, 9, 2);
+  ctx.fillRect(x, y + 3, 11, 1);
+  ctx.fillRect(x + 2, y + 4, 2, 1);
+  ctx.fillRect(x + 7, y + 4, 2, 1);
 }
 
-// GAME LOGIC
+// Init
 function init(): void {
   term.fullscreen(true);
   term.hideCursor(true);
@@ -83,12 +90,19 @@ function init(): void {
 
   term.on("key", (name: string) => {
     if (name === "CTRL_C") process.exit();
-    if (gameOver && (name === "r" || name === "R")) resetGame();
+
+    if (gameOver && (name === "r" || name === "R")) {
+      resetGame();
+      return;
+    }
+
     if (gameOver) return;
 
     if (name === "LEFT") ship.x -= 4;
     if (name === "RIGHT") ship.x += 4;
+
     clampShip();
+
     if (name === " ") shoot();
   });
 
@@ -96,6 +110,7 @@ function init(): void {
   gameLoop();
 }
 
+// Spawn Aliens (Continuous)
 function spawnAliens(rows: number = 1, cols: number = ALIEN_COLS): void {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -110,15 +125,30 @@ function spawnAliens(rows: number = 1, cols: number = ALIEN_COLS): void {
   }
 }
 
+// Push swarm down when new row enters
+function pushAlienSwarmDown(): void {
+  alienArray.forEach((alien) => {
+    if (!alien.alive) return;
+
+    alien.y += alienHeight + 4;
+
+    if (alien.y >= ship.y - 4) {
+      gameOver = true;
+    }
+  });
+}
+
 function resetGame(): void {
   ship.x = 75;
   bulletArray = [];
+  alienArray = [];
+
   score = 0;
   gameOver = false;
   alienVelocityX = 1;
-  currentAlienRows = INITIAL_ALIEN_ROWS;
 
-  spawnAliens(currentAlienRows, ALIEN_COLS);
+  spawnAliens(INITIAL_ALIEN_ROWS);
+  lastAlienSpawn = Date.now();
 }
 
 function clampShip(): void {
@@ -128,6 +158,7 @@ function clampShip(): void {
   );
 }
 
+// Update Logic
 function update(): void {
   if (gameOver) return;
 
@@ -135,23 +166,33 @@ function update(): void {
 
   let hitWall = false;
 
-  // Move Aliens
+  // Move aliens
   alienArray.forEach((alien) => {
     if (!alien.alive) return;
+
     alien.x += alienVelocityX;
 
-    if (alien.x + alien.width >= 155 || alien.x <= 5) hitWall = true;
-    if (alien.y >= ship.y) gameOver = true;
+    if (alien.x + alien.width >= BOUNDARY_MAX_X || alien.x <= BOUNDARY_MIN_X) {
+      hitWall = true;
+    }
+
+    if (alien.y >= ship.y) {
+      gameOver = true;
+    }
   });
 
+  // Wall bounce
   if (hitWall) {
-    alienVelocityX *= -1.1;
-    alienArray.forEach((a) => (a.y += 4));
+    alienVelocityX *= -1;
   }
+
+  // Speed ramp
+  alienVelocityX *= 1.0005;
 
   // Bullets
   bulletArray.forEach((bullet) => {
     bullet.y -= 3;
+
     alienArray.forEach((alien) => {
       if (alien.alive && !bullet.used && detectCollision(bullet, alien)) {
         alien.alive = false;
@@ -161,59 +202,70 @@ function update(): void {
     });
   });
 
+  // Cleanup
   bulletArray = bulletArray.filter((b) => b.y > 0 && !b.used);
+  alienArray = alienArray.filter((a) => a.alive);
 
-  // Check for Win
-  if (alienArray.every((a) => !a.alive)) {
-    if (currentAlienRows < MAX_ALIEN_ROWS) {
-      currentAlienRows++;
-    }
-
-    bulletArray = [];
-    alienVelocityX = 1;
-    spawnAliens(currentAlienRows, ALIEN_COLS);
+  // Continuous spawn
+  if (Date.now() - lastAlienSpawn >= ALIEN_SPAWN_INTERVAL) {
+    pushAlienSwarmDown();
+    spawnAliens(1);
+    lastAlienSpawn = Date.now();
   }
 }
 
+// Draw
 function draw(): void {
-  // Clear each layer
   alienCtx.clearRect(0, 0, 160, 80);
   shipCtx.clearRect(0, 0, 160, 80);
 
-  // Draw boundary (grid border)
+  // Boundary
   shipCtx.fillRect(
     BOUNDARY_MIN_X,
     BOUNDARY_MIN_Y,
     BOUNDARY_MAX_X - BOUNDARY_MIN_X,
     1
-  ); // top line
+  );
+
   shipCtx.fillRect(
     BOUNDARY_MIN_X,
     BOUNDARY_MAX_Y,
     BOUNDARY_MAX_X - BOUNDARY_MIN_X,
     1
-  ); // bottom line
+  );
+
   shipCtx.fillRect(
     BOUNDARY_MIN_X,
     BOUNDARY_MIN_Y,
     1,
     BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
-  ); // left line
+  );
+
   shipCtx.fillRect(
     BOUNDARY_MAX_X,
     BOUNDARY_MIN_Y,
     1,
     BOUNDARY_MAX_Y - BOUNDARY_MIN_Y
-  ); // right line
+  );
 
-  alienArray.forEach((a) => {
-    if (a.alive) drawAlien(alienCtx, a.x, a.y);
+  // Draw aliens
+  alienArray.forEach((alien) => {
+    if (alien.alive) {
+      drawAlien(alienCtx, alien.x, alien.y);
+    }
   });
+
+  // Draw ship
   drawShip(shipCtx, ship.x, ship.y);
-  bulletArray.forEach((b) => shipCtx.fillRect(b.x, b.y, 1, 3));
+
+  // Draw bullets
+  bulletArray.forEach((bullet) => {
+    shipCtx.fillRect(bullet.x, bullet.y, 1, 3);
+  });
 
   const alienLines = alienCanvas.toString().split("\n");
   const shipLines = shipCanvas.toString().split("\n");
+
   const maxLines = Math.max(alienLines.length, shipLines.length);
 
   function isBlank(char: string | undefined): boolean {
@@ -249,35 +301,49 @@ function draw(): void {
   process.stdout.write(rendered);
 
   // HUD
-  term.moveTo(9, 2).white("SPACE for firing | <-- --> for movement | Press R to restart");
-  term.moveTo(2, 1).brightYellow(` SCORE: ${String(score).padStart(5, "0")} `);
+  term
+    .moveTo(9, 2)
+    .white("SPACE to fire | ← → to move | Press R to restart");
+
+  term
+    .moveTo(2, 1)
+    .brightYellow(` SCORE: ${String(score).padStart(5, "0")} `);
 
   if (gameOver) {
     const msg = figlet.textSync("GAME OVER");
     const lines = msg.split("\n");
+
     lines.forEach((line, index) => {
       term.moveTo(10, 6 + index).red(line);
     });
+
     term.moveTo(34, 12).yellow(` SCORE: ${String(score).padStart(5, "0")} `);
     term.moveTo(30, 14).yellow(" Press 'R' to Restart ");
   }
 }
 
+// Shoot
 function shoot(): void {
   if (bulletArray.length < 3) {
-    bulletArray.push({ x: ship.x + 5, y: ship.y, used: false });
+    bulletArray.push({
+      x: ship.x + 5,
+      y: ship.y,
+      used: false,
+    });
   }
 }
 
-function detectCollision(a: Bullet, b: Alien): boolean {
+// Collision
+function detectCollision(bullet: Bullet, alien: Alien): boolean {
   return (
-    a.x < b.x + b.width &&
-    a.x + 1 > b.x &&
-    a.y < b.y + b.height &&
-    a.y + 3 > b.y
+    bullet.x < alien.x + alien.width &&
+    bullet.x + 1 > alien.x &&
+    bullet.y < alien.y + alien.height &&
+    bullet.y + 3 > alien.y
   );
 }
 
+// Main Loop
 function gameLoop(): void {
   update();
   draw();
