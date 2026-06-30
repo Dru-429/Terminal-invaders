@@ -106,7 +106,7 @@ function update(): void {
       if (alien.alive && !bullet.used && detectCollision(bullet, alien)) {
         alien.alive = false;
         bullet.used = true;
-        game.score += 100;
+        game.score += 10;
       }
     });
   });
