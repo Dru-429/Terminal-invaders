@@ -13,6 +13,11 @@ export const PLAYER_FILE = path.join(
   "player.json"
 );
 
+export const SCORE_FILE = path.join(
+  APP_DIR,
+  "scores.json"
+);
+
 export const PENDING_SCORES_FILE = path.join(
   APP_DIR,
   "pending-scores.json"

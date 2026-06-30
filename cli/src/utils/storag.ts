@@ -2,10 +2,15 @@ import fs from "fs";
 import {
   APP_DIR,
   PLAYER_FILE,
+  SCORE_FILE,
   PENDING_SCORES_FILE,
 } from "./config.js";
 
-import type { Player, PendingScore } from "../types/player.types.js";
+import type {
+  Player,
+  PlayerStats,
+  PendingScore,
+} from "../types/player.types.js";
 
 export function ensureAppDirectory(): void {
   if (!fs.existsSync(APP_DIR)) {
@@ -42,6 +47,31 @@ export function playerExists(): boolean {
   ensureAppDirectory();
 
   return fs.existsSync(PLAYER_FILE);
+}
+
+export function saveStats(stats: PlayerStats): void {
+  ensureAppDirectory();
+
+  fs.writeFileSync(
+    SCORE_FILE,
+    JSON.stringify(stats, null, 2),
+    "utf-8"
+  );
+}
+
+export function loadStats(): PlayerStats | null {
+  ensureAppDirectory();
+
+  if (!fs.existsSync(SCORE_FILE)) {
+    return null;
+  }
+
+  const rawData = fs.readFileSync(
+    SCORE_FILE,
+    "utf-8"
+  );
+
+  return JSON.parse(rawData) as PlayerStats;
 }
 
 export function savePendingScores(
