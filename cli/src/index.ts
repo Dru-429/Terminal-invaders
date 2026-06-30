@@ -10,7 +10,6 @@ const { terminal: term } = pkg;
 async function init() {
   await initializePlayer();
 
-  term.fullscreen(true);
   term.hideCursor(true);
   term.grabInput(true);
 

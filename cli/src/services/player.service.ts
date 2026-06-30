@@ -9,6 +9,7 @@ import {
   savePlayer,
 } from "../utils/storag.js";
 import { tagGenerator } from "../utils/tagGenerator.js";
+import { getStats } from "../services/score.service.js";
 
 import type { Player } from "../types/player.types.js";
 
@@ -18,6 +19,27 @@ function isValidUsername(username: string): boolean {
     username.length <= MAX_USERNAME_LENGTH &&
     /^[\w\s-]+$/.test(username)
   );
+}
+
+async function waitToStart(): Promise<void> {
+  const rl = readline.createInterface({ input, output });
+
+  try {
+    await rl.question("\nPress Enter to start the game...");
+  } finally {
+    rl.close();
+  }
+}
+
+async function showWelcomeBack(player: Player): Promise<void> {
+  const stats = getStats();
+
+  output.write(
+    `\nWelcome back, ${getDisplayName(player)}!\n` +
+      `Highest score: ${stats.highestScore}\n`
+  );
+
+  await waitToStart();
 }
 
 async function promptForUsername(): Promise<string> {
@@ -56,6 +78,7 @@ export async function initializePlayer(): Promise<Player> {
   const existing = loadPlayer();
 
   if (existing) {
+    await showWelcomeBack(existing);
     return existing;
   }
 
@@ -68,7 +91,8 @@ export async function initializePlayer(): Promise<Player> {
 
   savePlayer(player);
 
-  output.write(`Player created: ${getDisplayName(player)}\n`);
+  output.write(`\nPlayer created: ${getDisplayName(player)}`);
+  await waitToStart();
 
   return player;
 }
