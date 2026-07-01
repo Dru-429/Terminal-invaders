@@ -17,6 +17,7 @@ import {
 import { drawShip } from "./ship.js";
 import { drawAlien } from "./aliens.js";
 import { drawNukes } from "./nukes.js";
+import { getStats } from "../services/score.service.js";
 
 const { terminal: term } = pkg;
 
@@ -111,10 +112,13 @@ export function render(): void {
   term.moveTo(1, 1);
   process.stdout.write(rendered);
 
-  term.moveTo(9, 2).white("← → Move | Auto Fire | R Restart");
+  term.moveTo(28, 2).white("← → Move | Auto Fire | R Restart");
   term
     .moveTo(2, 1)
-    .brightYellow(` SCORE: ${String(game.score).padStart(5, "0")} `);
+    .brightBlue(` SCORE: ${String(game.score).padStart(5, "0")} `);
+  term
+    .moveTo(60, 1)
+    .brightGreen(`HIGHEST SCORE: ${String(getStats().highestScore).padStart(5, "0")} `);
 
   if (game.gameOver) {
     const msg = figlet.textSync("GAME OVER");
@@ -123,5 +127,9 @@ export function render(): void {
     lines.forEach((line, index) => {
       term.moveTo(10, 6 + index).red(line);
     });
+    term.moveTo(30, 12).brightBlue(`SCORE: ${game.score}`);
+    term.moveTo(30, 13).brightGreen(
+      `HIGHEST SCORE: ${getStats().highestScore}`
+    );
   }
 }
