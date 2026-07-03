@@ -11,3 +11,22 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Players {
+  id           String   @default(uuid())
+  username     String
+  tag          String   @unique
+  highestScore Int
+  gamePlayed   Int
+  createdAt    DateTime @default(now())
+  scores       Scores[]
+}
+
+model Scores {
+  id         String   @unique @default(uuid())
+  playerId   String
+  score      Int
+  createdAt  DateTime @default(now())
+  players    Players? @relation(fields: [playersTag], references: [tag])
+  playersTag String?
+}
