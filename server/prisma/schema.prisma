@@ -13,7 +13,7 @@ datasource db {
 }
 
 model Players {
-  id           String   @default(uuid())
+  id           String   @id @default(uuid())
   username     String
   tag          String   @unique
   highestScore Int
