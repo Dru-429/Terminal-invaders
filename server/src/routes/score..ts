@@ -1,9 +1,9 @@
-import express from "express"
+import express from "express";
 import { PrismaClient } from "@prisma/client/extension";
 import type { Request, Response } from "express";
 
-const scoreRouter = express.Router()
-const prisma = new PrismaClient()
+const scoreRouter = express.Router();
+const prisma = new PrismaClient();
 
 scoreRouter.post("/", async (req: Request, res: Response) => {
   try {
@@ -73,7 +73,32 @@ scoreRouter.post("/", async (req: Request, res: Response) => {
 });
 
 scoreRouter.get("/:playerId", async (req, res) => {
-  
-})
+  try {
+    const playerId = req.params.playerId;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
 
-export default scoreRouter
+    const scoresArray = await prisma.scores.findMany({
+      where: {
+        playerId: playerId,
+      },
+      orderBy: {
+        skip: (page -1) * limit,
+        take: limit,
+      }
+    });
+
+    if(scoresArray.length === 0) {
+      return res.status(404).json({
+        error: "No scores found"
+      })    
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Failed to fetch scores"
+    })
+  }
+});
+
+export default scoreRouter;
