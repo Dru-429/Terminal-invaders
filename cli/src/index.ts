@@ -3,11 +3,13 @@
 import pkg from "terminal-kit";
 import { setupControls } from "./game/controls.js";
 import { resetGame, gameLoop, clampShip } from "./game/gameLoop.js";
+import { initializePlayer } from "./services/player.service.js";
 
 const { terminal: term } = pkg;
 
-function init() {
-  term.fullscreen(true);
+async function init() {
+  await initializePlayer();
+
   term.hideCursor(true);
   term.grabInput(true);
 

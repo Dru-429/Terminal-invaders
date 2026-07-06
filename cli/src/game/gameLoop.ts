@@ -14,6 +14,9 @@ import {
 import { detectCollision, detectShipCollision } from "./collision.js";
 import { render } from "./renderer.js";
 import { shoot } from "./bullets.js";
+import { recordGame } from "../services/score.service.js";
+
+let scoreRecorded = false;
 
 export function clampShip(): void {
   game.ship.x = Math.max(
@@ -68,7 +71,14 @@ function dropNuke(): void {
 }
 
 function update(): void {
-  if (game.gameOver) return;
+  if (game.gameOver) {
+    if (!scoreRecorded) {
+      recordGame(game.score);
+      scoreRecorded = true;
+    }
+
+    return;
+  }
 
   clampShip();
   shoot();
@@ -133,6 +143,7 @@ function update(): void {
 }
 
 export function resetGame(): void {
+  scoreRecorded = false;
   game.ship.x = 75;
   game.bulletArray = [];
   game.alienArray = [];

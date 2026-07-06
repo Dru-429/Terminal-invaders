@@ -2,6 +2,9 @@ export interface Player {
   playerId: string;
   username: string;
   tag: string;
+}
+
+export interface PlayerStats {
   highestScore: number;
   gamesPlayed: number;
 }
