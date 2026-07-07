@@ -1,11 +1,10 @@
 import express from "express";
 import type { Request, Response } from "express";
-import { PrismaClient } from "../generated/prisma/client.js";
 import dotenv from "dotenv";
+import { prisma } from "../db.js";
 
 dotenv.config();
 
-const prisma = new PrismaClient({} as any);
 const playerRouter = express.Router();
 
 playerRouter.post("/", async (req: Request, res: Response) => {

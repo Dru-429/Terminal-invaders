@@ -1,10 +1,9 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client/extension";
 import type { Request, Response } from "express";
 import { startOfWeek } from "date-fns";
- 
+import { prisma } from "../db.js";
+
 const leaderboardRoute = express.Router();
-const prisma = new PrismaClient();
 
 leaderboardRoute.get("/global", async (req: Request, res: Response) => {
   try {
