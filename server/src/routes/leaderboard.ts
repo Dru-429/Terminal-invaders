@@ -13,9 +13,9 @@ leaderboardRoute.get("/global", async (req: Request, res: Response) => {
     const leadGlobal = await prisma.players.findMany({
       orderBy: {
         highestScore: "desc",
-        skip: (page - 1) * limit,
-        take: limit,
       },
+      skip: (page - 1) * limit,
+      take: limit,
     });
 
     res.status(200).json({
@@ -36,31 +36,31 @@ leaderboardRoute.get("/weekly", async (req: Request, res: Response) => {
     const limit: number = Number(req.query.limit) || 25;
     const currentWeekStart = startOfWeek(new Date(), {
       weekStartsOn: 1,
-    })
+    });
 
     const leadWeekly = await prisma.scores.groupBy({
-      by: ["playerId"], 
+      by: ["playerId"],
       where: {
         createdAt: {
           gte: currentWeekStart,
-        }
+        },
       },
       _max: {
         score: true,
       },
       orderBy: {
-        _max:{
-          score: "desc"
-        }, 
-        skip: (page - 1) * limit,
-        take: limit,
-      }
-    })
+        _max: {
+          score: "desc",
+        },
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
 
     res.status(200).json({
       pleayers: leadWeekly,
-      message: "Weekly leaderboard fetched"
-    })
+      message: "Weekly leaderboard fetched",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -70,40 +70,40 @@ leaderboardRoute.get("/weekly", async (req: Request, res: Response) => {
 });
 
 leaderboardRoute.get("/daily", async (req: Request, res: Response) => {
-  try{
+  try {
     const page: number = Number(req.query.page) || 1;
     const limit: number = Number(req.query.limit) || 25;
     const currentDate = new Date();
+    currentDate.setHours(0,0,0,0);
 
     const leadDaily = await prisma.scores.groupBy({
       by: ["playerId"],
       where: {
         createdAt: {
-          gte: currentDate.setHours(0, 0, 0, 0),
-        }
+          gte: currentDate,
+        },
       },
       _max: {
-        scrore: true,
+        score: true,
       },
       orderBy: {
         _max: {
           score: "desc",
-          skip: (page -1) * limit,
-          take: limit,
-        }
-      }
-    })
+        },
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
 
     res.status(200).json({
       players: leadDaily,
-      message: "Daily leaderboard fetched"
-    })
-  }
-  catch(error){
+      message: "Daily leaderboard fetched",
+    });
+  } catch (error) {
     console.log(error);
     res.status(500).json({
-      error: "Failed to fetch"
-    })
+      error: "Failed to fetch",
+    });
   }
 });
 

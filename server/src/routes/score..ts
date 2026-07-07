@@ -82,9 +82,10 @@ scoreRouter.get("/:playerId", async (req, res) => {
         playerId: playerId,
       },
       orderBy: {
-        skip: (page -1) * limit,
-        take: limit,
-      }
+        createdAt: "desc",
+      },
+      skip: (page -1) * limit,
+      take: limit,
     });
 
     if(scoresArray.length === 0) {
