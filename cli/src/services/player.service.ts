@@ -95,8 +95,14 @@ export async function initializePlayer(): Promise<Player> {
   output.write(`\nPlayer created: ${getDisplayName(player)}`);
 
   try {
-    await createPlayer(player);
+    const serverId = await createPlayer(player);
+
+    if (serverId) {
+      player.playerId = serverId;
+      savePlayer(player);
+    }
   } catch (err) {
+    // ignore network errors for now
   }
 
   await waitToStart();

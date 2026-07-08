@@ -18,10 +18,8 @@ export const SCORE_FILE = path.join(
   "scores.json"
 );
 
-export const PENDING_SCORES_FILE = path.join(
-  APP_DIR,
-  "pending-scores.json"
-);
+export const SYNC_DIR = path.join(APP_DIR, "sync");
+export const SYNC_SCORES_FILE = path.join(SYNC_DIR, "scores.json");
 
 export const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:5000";
 

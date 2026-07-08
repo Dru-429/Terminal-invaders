@@ -3,13 +3,15 @@ import { API_BASE_URL } from "../utils/config.js";
 
 import type { Player } from "../types/player.types.js";
 
-export async function createPlayer(player: Player): Promise<void> {
+export async function createPlayer(player: Player) {
   try {
-    const player_id = await axios.post(`${API_BASE_URL}/player`, {
+    const res = await axios.post(`${API_BASE_URL}/player`, {
       username: player.username,
       tag: player.tag,
     });
-    
+
+    return res.data?.id ?? null;
+
   } catch (err) {
     throw err;
   }
@@ -23,7 +25,6 @@ export async function submitScore(
     await axios.post(`${API_BASE_URL}/score`, {
       playerId,
       score,
-      timestamp: new Date().toISOString(),
     });
   } catch (err) {
     throw err;

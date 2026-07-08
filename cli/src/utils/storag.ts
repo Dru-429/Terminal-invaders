@@ -3,7 +3,8 @@ import {
   APP_DIR,
   PLAYER_FILE,
   SCORE_FILE,
-  PENDING_SCORES_FILE,
+  SYNC_DIR,
+  SYNC_SCORES_FILE,
 } from "./config.js";
 
 import type {
@@ -52,11 +53,7 @@ export function playerExists(): boolean {
 export function saveStats(stats: PlayerStats): void {
   ensureAppDirectory();
 
-  fs.writeFileSync(
-    SCORE_FILE,
-    JSON.stringify(stats, null, 2),
-    "utf-8"
-  );
+  fs.writeFileSync(SCORE_FILE, JSON.stringify(stats, null, 2), "utf-8");
 }
 
 export function loadStats(): PlayerStats | null {
@@ -66,39 +63,50 @@ export function loadStats(): PlayerStats | null {
     return null;
   }
 
-  const rawData = fs.readFileSync(
-    SCORE_FILE,
-    "utf-8"
-  );
+  const rawData = fs.readFileSync(SCORE_FILE, "utf-8");
 
-  return JSON.parse(rawData) as PlayerStats;
+  try {
+    const parsed = JSON.parse(rawData);
+
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      parsed.highestScore !== undefined &&
+      parsed.gamesPlayed !== undefined
+    ) {
+      return parsed as PlayerStats;
+    }
+  } catch (_) {
+    return null;
+  }
+
+  return null;
 }
 
-export function savePendingScores(
-  scores: PendingScore[]
-): void {
+export function ensureSyncDirectory(): void {
   ensureAppDirectory();
 
-  fs.writeFileSync(
-    PENDING_SCORES_FILE,
-    JSON.stringify(scores, null, 2),
-    "utf-8"
-  );
+  if (!fs.existsSync(SYNC_DIR)) {
+    fs.mkdirSync(SYNC_DIR, { recursive: true });
+  }
+}
+
+export function savePendingScores(scores: PendingScore[]): void {
+  ensureSyncDirectory();
+
+  fs.writeFileSync(SYNC_SCORES_FILE, JSON.stringify(scores, null, 2), "utf-8");
 }
 
 export function loadPendingScores(): PendingScore[] {
-  ensureAppDirectory();
+  ensureSyncDirectory();
 
-  if (!fs.existsSync(PENDING_SCORES_FILE)) {
+  if (!fs.existsSync(SYNC_SCORES_FILE)) {
     return [];
   }
 
-  const rawData = fs.readFileSync(
-    PENDING_SCORES_FILE,
-    "utf-8"
-  );
+  const rawData = fs.readFileSync(SYNC_SCORES_FILE, "utf-8");
 
-  return JSON.parse(rawData) as PendingScore[];
+  return (JSON.parse(rawData) as PendingScore[]) ?? [];
 }
 
 export function addPendingScore(
@@ -112,10 +120,10 @@ export function addPendingScore(
 }
 
 export function clearPendingScores(): void {
-  ensureAppDirectory();
+  ensureSyncDirectory();
 
   fs.writeFileSync(
-    PENDING_SCORES_FILE,
+    SYNC_SCORES_FILE,
     JSON.stringify([], null, 2),
     "utf-8"
   );
