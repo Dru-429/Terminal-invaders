@@ -10,6 +10,7 @@ import {
 } from "../utils/storag.js";
 import { tagGenerator } from "../utils/tagGenerator.js";
 import { getStats } from "../services/score.service.js";
+import { createPlayer } from "../services/api.service.js";
 
 import type { Player } from "../types/player.types.js";
 
@@ -92,6 +93,18 @@ export async function initializePlayer(): Promise<Player> {
   savePlayer(player);
 
   output.write(`\nPlayer created: ${getDisplayName(player)}`);
+
+  try {
+    const serverId = await createPlayer(player);
+
+    if (serverId) {
+      player.playerId = serverId;
+      savePlayer(player);
+    }
+  } catch (err) {
+    // ignore network errors for now
+  }
+
   await waitToStart();
 
   return player;

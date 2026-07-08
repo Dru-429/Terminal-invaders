@@ -1,9 +1,8 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client/extension";
 import type { Request, Response } from "express";
+import { prisma } from "../db.js";
 
 const scoreRouter = express.Router();
-const prisma = new PrismaClient();
 
 scoreRouter.post("/", async (req: Request, res: Response) => {
   try {
@@ -83,9 +82,10 @@ scoreRouter.get("/:playerId", async (req, res) => {
         playerId: playerId,
       },
       orderBy: {
-        skip: (page -1) * limit,
-        take: limit,
-      }
+        createdAt: "desc",
+      },
+      skip: (page -1) * limit,
+      take: limit,
     });
 
     if(scoresArray.length === 0) {
