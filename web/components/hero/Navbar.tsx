@@ -121,7 +121,7 @@ export function Navbar () {
           <a
             key={item}
             href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-            className='border-r-2 border-background last:border-r-0 py-3 text-center font-display font-semibold text-[15px] tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase'
+            className='border-r-2 border-background last:border-r-0 py-3 text-center font-display font-semibold text-lg tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase'
           >
             {item}
           </a>
