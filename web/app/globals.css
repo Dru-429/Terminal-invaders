@@ -68,7 +68,7 @@
 :root {
   --radius: 0.25rem;
   /* Cyber Drive palette */
-  --background: oklch(0.13 0.005 260);           /* #0A0B0D */
+  --background: oklch(15.821% 0.00721 258.412);           /* #0A0B0D */
   --foreground: oklch(0.92 0.03 70);             /* #F2DCC9 cream */
   --card: oklch(0.16 0.006 260);                 /* #141619 */
   --card-foreground: oklch(0.92 0.03 70);
@@ -84,7 +84,8 @@
   --accent-foreground: oklch(0.13 0.005 260);
   --destructive: oklch(0.65 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.92 0.03 70 / 18%);
+  /* --border: oklch(0.92 0.03 70 / 78%); */
+  --border: oklch(0.62 0.08 235);
   --input: oklch(0.22 0.01 240);
   --ring: oklch(0.62 0.08 235);
   --chart-1: oklch(0.646 0.222 41.116);
