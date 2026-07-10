@@ -73,7 +73,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="px-8 py-12">
+        <div className="px-8 py-12 w-[25%]">
           <HighScores />
         </div>
       </div>
