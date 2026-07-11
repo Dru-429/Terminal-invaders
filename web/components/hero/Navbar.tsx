@@ -98,7 +98,7 @@ export function Navbar () {
             {today || 'WEDBNESDAY, JULY 20, 2005'}
           </p>
 
-          <h1 className='font-display text-3xl md:text-5xl lg:text-6xl font-bold tracking-[0.04em] text-foreground leading-none'>
+          <h1 className='font-display text-3xl md:text-8xl lg:text-7xl font-bold tracking-[0.04em] text-foreground leading-none'>
             TERMINAL INVADERS
           </h1>
 
