@@ -1,8 +1,8 @@
 import { Navbar } from '@/components/hero/Navbar';
 import { Hero } from '@/components/hero/Hero';
-import { Invasion } from '@/components/ctrl/Invasion';
 import Ctrl from '@/components/ctrl/ctrl';
 import { OpenSource } from '@/components/os/os';
+import { Comics } from '@/components/comic/Comic';
 
 export default function Home() {
   return (
@@ -11,6 +11,7 @@ export default function Home() {
       <Hero />
       <Ctrl />
       <OpenSource />
+      <Comics />
     </main>
   );
 }
