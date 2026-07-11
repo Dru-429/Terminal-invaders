@@ -6,14 +6,14 @@ import KeyDiagram from './Keyboard';
 const ctrl = () => {
   return (
     <section
-      className='w-full h-[100vh] mb-[100vh] max-w-screen flex flex-col md:flex-row gap-4 border border-border'
+      className='w-full max-h-screen max-w-screen flex flex-col md:flex-row md:gap-4 border border-border'
       aria-label='Invasion sequence'
     >
-      <div className='w-[25%] text-center border-r border-border py-12 px-6'>
+      <div className='md:w-[25%] text-center border-r border-border py-12 px-6'>
         <Invasion />
       </div>
       {/* RIGHT — placeholder for next content */}
-      <div className='w-[75%] relative border border-border bg-card/40 p-6 md:p-10 min-h-[520px] flex flex-col'>
+      <div className='md:w-[75%] relative bg-card/40 p-6 md:p-10 min-h-[520px] flex flex-col'>
         <div className='flex items-start justify-between'>
           <p className='text-[11px] tracking-[0.4em] text-muted-foreground'>
             CONTROLS / 002
@@ -30,7 +30,7 @@ const ctrl = () => {
           Six keys stand between you and extinction. Scroll to map each binding.
         </p>
 
-        <div className='relative mt-8 flex-1'>
+        <div className='relative -mt-4 flex-1'>
           <KeyDiagram />
         </div>
       </div>{' '}
