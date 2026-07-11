@@ -6,10 +6,10 @@ import KeyDiagram from './Keyboard';
 const ctrl = () => {
   return (
     <section
-      className='w-full max-h-screen max-w-screen flex flex-col md:flex-row md:gap-4 border border-border'
+      className='w-full h-fit max-w-screen flex flex-col md:flex-row md:gap-4 border border-border'
       aria-label='Invasion sequence'
     >
-      <div className='md:w-[25%] text-center border-r border-border py-12 px-6'>
+      <div className='md:w-[25%] text-center border-r border-border py-9 px-6'>
         <Invasion />
       </div>
       {/* RIGHT — placeholder for next content */}

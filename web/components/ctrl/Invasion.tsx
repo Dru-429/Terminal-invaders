@@ -10,18 +10,15 @@ export function Invasion () {
     offset: ['start end', 'end start']
   })
 
-  const ufoY = useTransform(scrollYProgress, [0, 0.5], [-30, 0])
+  const ufoY = useTransform(scrollYProgress, [0, 0.5], [-30, 15])
   const beamScale = useTransform(scrollYProgress, [0.15, 0.6], [0, 1])
   const beamOpacity = useTransform(scrollYProgress, [0.1, 0.4], [0, 1])
-  const alienOpacity = useTransform(scrollYProgress, [0.30, 0.6], [0, 1])
-  const alienY = useTransform(scrollYProgress, [0.30, 0.65], [12, 0])
+  const alienOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1])
+  const alienY = useTransform(scrollYProgress, [0.3, 0.65], [12, 0])
 
   return (
-    <section
-      ref={ref}
-      className='relative w-full'
-    >
-      <div className='relative min-h-[520px] w-full bg-card/40'>
+    <section ref={ref} className='relative w-full'>
+      <div className='relative min-h-[600px] w-full bg-card/40 '>
         <div className='absolute inset-0 flex flex-col items-center justify-between py-8 top-8'>
           {/* UFO */}
           <motion.svg
@@ -101,31 +98,37 @@ export function Invasion () {
             <BeamSVG />
           </motion.div>
 
-          {/* Alien */}
+          {/* Cow */}
           <motion.svg
             style={{ opacity: alienOpacity, y: alienY }}
             viewBox='0 0 44 32'
-            className='w-[38%] max-w-[110px] relative -top-5'
+            className='w-[38%] max-w-[110px] scale-125 relative -top-5'
             shapeRendering='crispEdges'
             aria-hidden
           >
-            <g fill='var(--color-secondary)'>
-              {/* classic space-invader */}
-              <rect x='14' y='2' width='4' height='4' />
-              <rect x='26' y='2' width='4' height='4' />
-              <rect x='18' y='6' width='4' height='4' />
-              <rect x='22' y='6' width='4' height='4' />
-              <rect x='10' y='10' width='24' height='4' />
-              <rect x='6' y='14' width='4' height='4' />
-              <rect x='14' y='14' width='4' height='4' />
-              <rect x='22' y='14' width='4' height='4' />
-              <rect x='30' y='14' width='4' height='4' />
-              <rect x='38' y='14' width='4' height='4' />
-              <rect x='2' y='18' width='40' height='4' />
-              <rect x='6' y='22' width='4' height='4' />
-              <rect x='34' y='22' width='4' height='4' />
-              <rect x='2' y='26' width='4' height='4' />
-              <rect x='38' y='26' width='4' height='4' />
+            <g fill='var(--color-foreground)'>
+              <rect x='36' y='6' width='2' height='2' />
+              <rect x='40' y='8' width='2' height='2' />
+
+              <rect x='34' y='8' width='6' height='6' />
+              <rect x='38' y='12' width='4' height='4' />
+
+              <rect x='30' y='12' width='6' height='4' />
+              <rect x='10' y='12' width='22' height='4' />
+              <rect x='8' y='14' width='26' height='8' />
+
+              <rect x='10' y='22' width='22' height='2' />
+              <rect x='14' y='24' width='14' height='2' />
+
+              <rect x='16' y='24' width='4' height='2' />
+
+              <rect x='6' y='14' width='2' height='6' />
+              <rect x='4' y='18' width='2' height='4' />
+
+              <rect x='10' y='22' width='3' height='8' />
+              <rect x='15' y='24' width='3' height='6' />
+              <rect x='28' y='22' width='3' height='8' />
+              <rect x='32' y='22' width='3' height='8' />
             </g>
           </motion.svg>
         </div>
@@ -143,7 +146,7 @@ export function Invasion () {
 
 function BeamSVG () {
   // pixel-dot trapezoid beam
-  const rows = 14
+  const rows = 16
   const cells: ReactElement[] = []
   for (let r = 0; r < rows; r++) {
     const width = 6 + r * 2 // widens downward

@@ -2,6 +2,7 @@ import { Navbar } from '@/components/hero/Navbar';
 import { Hero } from '@/components/hero/Hero';
 import { Invasion } from '@/components/ctrl/Invasion';
 import Ctrl from '@/components/ctrl/ctrl';
+import { OpenSource } from '@/components/os/os';
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Ctrl />
+      <OpenSource />
     </main>
   );
 }
