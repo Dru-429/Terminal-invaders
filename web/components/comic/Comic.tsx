@@ -86,12 +86,12 @@ export function Comics () {
             <motion.img
               src={p.src}
               alt={p.alt}
-              className='block h-full w-full object-cover '
+              className='block h-full w-full  '
               loading='lazy'
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
+                objectFit: 'contain',
                 filter: 'grayscale(100%)' 
               }}
               whileHover={{
