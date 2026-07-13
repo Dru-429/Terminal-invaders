@@ -30,7 +30,7 @@ export function MeetDeveloper () {
           </div>
         </div>
 
-        <div className='w-[20%] flex justify-center p-10'>
+        <div className='w-[20%] flex items-center p-10'>
           <QuickLinks />
         </div>
       </div>

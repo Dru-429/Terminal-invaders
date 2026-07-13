@@ -9,8 +9,9 @@ const LINKS = [
 
 export default function QuickLinks() {
   return (
-    <div className="max-h-[460px] rounded-md border border-dashed border-border bg-card p-6 flex flex-col">
+    <div className="min-h-[400px] max-h-[460px ] w-full rounded-md border border-dashed border-border bg-card p-6 flex flex-col">
       <h3 className="font-display text-2xl text-foreground uppercase tracking-wider">
+          Let's connect
       </h3>
       <div className="mt-1 text-xs text-muted-foreground font-mono">// SOCKET OPEN</div>
 

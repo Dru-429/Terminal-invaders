@@ -47,7 +47,7 @@ export function Roadmap() {
         className="max-w-3xl"
       >
         <h2 className="font-display text-4xl md:text-6xl font-bold uppercase leading-[0.95] text-foreground">
-          The<br />Roadmap
+          The Roadmap
         </h2>
         <p className="mt-3 font-mono text-sm text-muted-foreground">
           &gt; What&#39;s done and what&#39;s coming next.
