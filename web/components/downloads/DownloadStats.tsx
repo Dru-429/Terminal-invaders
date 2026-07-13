@@ -67,7 +67,6 @@ export default function Stats () {
           Download Stats:
         </h3>
         <div className='flex items-end text-xs text-muted-foreground font-mono'>
-          // SOCKET OPEN
         </div>
       </div>
 
