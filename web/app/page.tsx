@@ -4,6 +4,7 @@ import Ctrl from '@/components/ctrl/ctrl';
 import { OpenSource } from '@/components/os/os';
 import { Comics } from '@/components/comic/Comic';
 import { MeetDeveloper } from '@/components/meetDev/MeetDev';
+import { Downloads } from '@/components/downloads/stats';
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Ctrl />
+      <Downloads />
       <OpenSource />
       <Comics />
       <MeetDeveloper />
