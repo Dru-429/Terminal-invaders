@@ -4,7 +4,7 @@ import Ctrl from '@/components/ctrl/ctrl';
 import { OpenSource } from '@/components/os/os';
 import { Comics } from '@/components/comic/Comic';
 import { MeetDeveloper } from '@/components/meetDev/MeetDev';
-import { Downloads } from '@/components/downloads/stats';
+import Downloads from '@/components/downloads/Downloads';
 
 export default function Home() {
   return (

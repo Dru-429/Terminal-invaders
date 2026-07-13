@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Manager = "NPM" | "YARN" | "PNPM" | "BUN";
 
@@ -13,19 +13,8 @@ const INSTALL: Record<Manager, string> = {
 };
 
 const RUN = "terminal-invaders";
-
-// Static package facts (from npm registry)
-const PUBLISHED_START = "2026-03-24"; 
 const PKG = "terminal-invaders";
 const VERSION = "1.0.3";
-const LICENSE = "ISC";
-const DEPS = 0;
-const INSTALL_SIZE = "27.1 MB";
-const MAINTAINER = "dru429";
-
-function fmt(n: number) {
-  return n.toLocaleString("en-US");
-}
 
 function CopyRow({ cmd }: { cmd: string }) {
   const [copied, setCopied] = useState(false);
@@ -54,53 +43,13 @@ function CopyRow({ cmd }: { cmd: string }) {
   );
 }
 
-function Stat({
-  label,
-  value,
-  loading = false,
-}: {
-  label: string;
-  value: string | number;
-  loading?: boolean;
-}) {
-  return (
-    <div className="border border-border bg-card/40 p-4">
-      <p className="text-[10px] tracking-[0.3em] text-muted-foreground">{label}</p>
-      <p className="mt-2 font-display text-2xl md:text-3xl text-foreground">
-        {loading ? <span className="text-muted-foreground">···</span> : value}
-      </p>
-    </div>
-  );
-}
 
-export function Downloads() {
+export function DownloadLink() {
   const [tab, setTab] = useState<Manager>("NPM");
-  const [total, setTotal] = useState<number | null>(null);
-  const [lastWeek, setLastWeek] = useState<number | null>(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    const totalUrl = `https://api.npmjs.org/downloads/point/${PUBLISHED_START}:${today}/${PKG}`;
-    const weekUrl = `https://api.npmjs.org/downloads/point/last-week/${PKG}`;
-
-    Promise.all([
-      fetch(totalUrl).then((r) => r.json()),
-      fetch(weekUrl).then((r) => r.json()),
-    ])
-      .then(([t, w]) => {
-        setTotal(typeof t?.downloads === "number" ? t.downloads : 0);
-        setLastWeek(typeof w?.downloads === "number" ? w.downloads : 0);
-      })
-      .catch(() => setFailed(true));
-  }, []);
-
-  const loading = total === null && !failed;
 
   return (
-    <section
-      id="download"
-      className="relative w-full border-b border-border px-8 py-16 md:py-24"
+    <div
+      className="relative w-full border-r border-border px-8 py-16 md:py-24"
     >
       {/* Corner tags */}
       <div className="mb-10 flex items-center justify-between">
@@ -119,7 +68,7 @@ export function Downloads() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="max-w-3xl"
       >
-        <h2 className="font-display text-4xl md:text-6xl font-bold uppercase tracking-[0.02em] text-foreground leading-[0.95]">
+        <h2 className="font-display text-4xl md:text-7xl font-bold uppercase tracking-[0.02em] text-foreground leading-[0.95]">
           Download &<br />Install
         </h2>
         <p className="mt-3 text-[11px] tracking-[0.4em] text-muted-foreground">
@@ -169,33 +118,7 @@ export function Downloads() {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-3 content-start">
-          <Stat
-            label="TOTAL DOWNLOADS"
-            value={total !== null ? fmt(total) : failed ? "—" : "0"}
-            loading={loading}
-          />
-          <Stat
-            label="LAST 7 DAYS"
-            value={lastWeek !== null ? fmt(lastWeek) : failed ? "—" : "0"}
-            loading={loading}
-          />
-          <Stat label="VERSION" value={VERSION} />
-          <Stat label="LICENSE" value={LICENSE} />
-          <Stat label="DEPENDENCIES" value={DEPS} />
-          <Stat label="INSTALL SIZE" value={INSTALL_SIZE} />
-          <div className="col-span-2 border border-border bg-card/40 p-4">
-            <p className="text-[10px] tracking-[0.3em] text-muted-foreground">
-              PUBLISHED
-            </p>
-            <p className="mt-2 font-mono text-sm text-foreground">
-              MAR 24, 2026 · by{" "}
-              <span className="text-secondary">~{MAINTAINER}</span>
-            </p>
-          </div>
-        </div>
       </div>
-    </section>
+    </div>
   );
 }
