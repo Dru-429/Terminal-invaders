@@ -26,7 +26,7 @@ const ASCII_ART = `        g@M%@%%@N%Nw,,
 
 export default function ReadmeTerminal () {
   return (
-    <div className='rounded-md overflow-hidden border border-border bg-[#0d1117] font-mono text-[11px] md:text-[12px] leading-[1.15] shadow-2xl'>
+    <div className='rounded-md overflow-hidden border border-border bg-[#0d1117] font-mono text-[11px] md:text-[12px] leading-[1.15] shadow-2xl '>
       {/* header */}
       <div className='px-4 py-2 border-b border-white/10 flex items-center gap-2 bg-[#0d1117]'>
         <span className='h-2.5 w-2.5 rounded-full bg-[#ff5f56]' />
