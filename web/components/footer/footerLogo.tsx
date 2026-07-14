@@ -1,6 +1,5 @@
 'use client'
 
-
 export default function FooterLogo() {
   return (
     <div className='relative pt-32 pb-6' aria-hidden>

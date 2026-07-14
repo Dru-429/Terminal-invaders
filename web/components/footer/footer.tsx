@@ -1,7 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import FooterLogo from './footerLogo'
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 function TransmissionTower ({ className = '' }: { className?: string }) {
   // Pixel-art transmission tower with radiating signal waves
@@ -164,13 +165,93 @@ function Column ({
 
 export function Footer () {
   const year = new Date().getFullYear()
+
+const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const mouseX = useMotionValue(-500);
+  const mouseY = useMotionValue(-500);
+
+  const springX = useSpring(mouseX, {
+    stiffness: 180,
+    damping: 22,
+  });
+
+  const springY = useSpring(mouseY, {
+    stiffness: 180,
+    damping: 22,
+  });
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    const handleMove = (e: MouseEvent) => {
+      const rect = wrapper.getBoundingClientRect();
+
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
+    };
+
+    const leave = () => {
+      mouseX.set(-500);
+      mouseY.set(-500);
+    };
+
+    wrapper.addEventListener("mousemove", handleMove);
+    wrapper.addEventListener("mouseleave", leave);
+
+    return () => {
+      wrapper.removeEventListener("mousemove", handleMove);
+      wrapper.removeEventListener("mouseleave", leave);
+    };
+  }, []);
+
   return (
-    <footer className='relative '>
-      {/* <div
-        className='pointer-events-none absolute inset-0 opacity-40'
-        style={{ background: 'var(--scanline)' }}
-        aria-hidden
-      /> */}
+    <footer className='relative ' ref={wrapperRef}>
+
+       <motion.div
+        style={{
+          left: springX,
+          top: springY,
+        }}
+        className="pointer-events-none absolute h-32 w-32
+        -translate-x-1/2
+        -translate-y-1/2
+        rounded-full
+        bg-[#4AA8D7]/20
+        blur-2xl"
+      />
+
+      {/* Pixel Distortion */}
+      <motion.div
+        style={{
+          left: springX,
+          top: springY,
+        }}
+        className="pointer-events-none absolute
+        h-44
+        w-44
+        -translate-x-1/2
+        -translate-y-1/2"
+      >
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(242,220,201,.35) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(242,220,201,.35) 1px, transparent 1px)
+            `,
+            backgroundSize: "15px 15px",
+            opacity: 0.4,
+            filter: "blur(.4px)",
+            maskImage:
+              "radial-gradient(circle at center, black 30%, transparent 80%)",
+            WebkitMaskImage:
+              "radial-gradient(circle at center, black 30%, transparent 80%)",
+          }}
+        />
+      </motion.div>
+
 
       <div className='relative mx-auto px-6 md:px-6 pt-20 md:pt-28'>
         {/* Terminal bar */}
