@@ -7,7 +7,8 @@ export function MeetDeveloper () {
   return (
     <section className='relative'>
       <div className='mx-auto max-w-screen px-4 md:px-8 border border-border flex flex-col md:flex-row gap-4'>
-        <div className="w-[80%] border-r border-border">
+        <div className="w-[80%] border-r border-border pb-20
+        ">
 
           <div className='flex items-end justify-between mb-8 m-6'>
             <div>

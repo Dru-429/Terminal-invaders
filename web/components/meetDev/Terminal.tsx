@@ -39,7 +39,7 @@ export default function ReadmeTerminal () {
 
       {/* body */}
       <div className='p-5 md:p-7 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6'>
-        <pre className='text-secondary whitespace-pre overflow-hidden select-none'>
+        <pre className='text-foreground/80 whitespace-pre overflow-hidden select-none'>
           {ASCII_ART}
         </pre>
 
@@ -90,9 +90,9 @@ function Row ({ k, v }: { k: string; v: string }) {
   const dots = '.'.repeat(Math.max(2, 26 - k.length))
   return (
     <div className='flex flex-wrap'>
-      <span className='text-secondary'>. {k}</span>
+      <span className='text-foregroud'>. {k}</span>
       <span className='text-foreground/30 mx-1'>{dots}</span>
-      <span className='text-foreground'>{v}</span>
+      <span className='text-secondary'>{v}</span>
     </div>
   )
 }
