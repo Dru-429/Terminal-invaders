@@ -24,7 +24,7 @@ const panels = [
 
 export function Comics () {
   return (
-    <section className='relative w-full border border-border px-6 py-16 md:px-10 md:py-24'>
+    <section className='relative w-full border border-border px-6 md:px-10 py-16 pb-4 md:py-24'>
       {/* Masthead */}
       <div className='mb-8 grid grid-cols-1 gap-6 border-b-2 border-double border-foreground/40 pb-6 md:grid-cols-2 md:items-end'>
         <div>
@@ -72,8 +72,7 @@ export function Comics () {
         </div>
       </div>
 
-      {/* Panels: 2 columns on mobile & desktop */}
-      <div className='grid grid-cols-4 gap-3 md:gap-5'>
+      <div className='grid md:grid-cols-4 gap-3 md:gap-5'>
         {panels.map((p, i) => (
           <motion.div
             key={i}

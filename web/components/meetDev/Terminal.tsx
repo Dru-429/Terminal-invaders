@@ -1,4 +1,5 @@
-const ASCII_ART = `        g@M%@%%@N%Nw,,
+const ASCII_ART = 
+`        g@M%@%%@N%Nw,,
        ,M*|\`||*g@NM=]mM%g||%N,
       p!\`\`   '!  |''\`  '''|||jhlj%w
      ,@L\`     ,,        '''\`|j%M]%M
@@ -50,17 +51,17 @@ export default function ReadmeTerminal () {
               ──────────────────────────────
             </span>
           </div>
-          <Row k='OS' v='Arch Linux, macOS, Windows (WSL)' />
-          <Row k='Uptime' v='24 years, 3 months, 12 days' />
+          <Row k='OS' v='Kali Linux, macOS, Windows (WSL)' />
+          <Row k='Uptime' v='20 years, 11 months, 25 days' />
           <Row k='Host' v='Independent / Open Source' />
           <Row k='Kernel' v='TERMINAL INVADERS v0.1.0' />
-          <Row k='IDE' v='Neovim, VS Code' />
+          <Row k='IDE' v='Cursor, VS Code' />
           <div className='h-3' />
-          <Row k='Languages.Programming' v='TypeScript, Rust, Go, Python' />
+          <Row k='Languages.Programming' v='TypeScript, JavaSricpt, Python' />
           <Row k='Languages.Terminal' v='bash, zsh, fish' />
-          <Row k='Languages.Real' v='English, Urdu' />
+          <Row k='Languages.Real' v='English, Hindi' />
           <div className='h-3' />
-          <Row k='Hobbies.Software' v='CLI tooling, Game engines, Pixel art' />
+          <Row k='Hobbies.Software' v='CLI tooling, Design Webs, Pixel art' />
           <Row k='Hobbies.Hardware' v='Mechanical keyboards, Retro consoles' />
           <div className='h-3' />
           <div className='text-secondary'>
@@ -69,16 +70,16 @@ export default function ReadmeTerminal () {
               ─────────────────────────
             </span>
           </div>
-          <Row k='Email' v='dru@terminalinvaders.dev' />
-          <Row k='GitHub' v='dru_429' />
-          <Row k='X / Twitter' v='@dru_429' />
+          <Row k='Email' v='sahoo.dru@gmail.com' />
+          <Row k='GitHub' v='dru-429' />
+          <Row k='X / Twitter' v='@10xdhruv' />
           <div className='h-3' />
           <div className='text-secondary'>
-            - GitHub Stats{' '}
+            - GitHub Stats{'265'}
             <span className='text-foreground/40'>──────────────────────</span>
           </div>
-          <Row k='Repos' v='47 {Contributed: 82} | Stars: 1,204' />
-          <Row k='Commits' v='3,891 | Followers: 312' />
+          <Row k='Repos' v='63 {Contributed: 12} | Stars: 265' />
+          <Row k='Commits' v='1,291 | Followers: 039' />
           <Row k='Lines shipped' v='128,430 (+94,201 / -34,229)' />
         </div>
       </div>
