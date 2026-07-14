@@ -83,7 +83,7 @@ export function Navbar () {
       {/* Top row */}
       <div className='grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-stretch border border-border bg-background'>
 
-        <div className='flex items-center justify-center p-5 border-b md:border-b-0 md:border-r border-border'>
+        <div className='hidden flex items-center justify-center p-5 border-b md:border-b-0 md:border-r border-border'>
           <div className='flex items-center gap-2 text-secondary'>
             <Invader className='h-20 w-auto' />
           </div>
@@ -108,7 +108,7 @@ export function Navbar () {
         </div>
 
         {/* Right Column: Market text / Signals */}
-        <div className='flex flex-col items-center justify-center text-center p-5 border-t md:border-t-0 md:border-l border-border  text-[15px] tracking-[0.15em] text-foreground gap-3'>
+        <div className='flex flex-row  md:flex-col items-center justify-between md:justify-center text-center p-5 border-t md:border-t-0 md:border-l border-border  text-[15px] tracking-[0.15em] text-foreground gap-3'>
             <p className='font-bold hover:text-secondary hover:text cursor-pointer '>NPM</p>
             <p className='font-bold hover:text-secondary hover:text cursor-pointer '>GITHUB</p>
             <p className='font-bold hover:text-secondary hover:text cursor-pointer '>TWITTER</p>
@@ -117,11 +117,11 @@ export function Navbar () {
 
       {/* Nav row */}
       <nav className='grid grid-cols-4 border border-border bg-border'>
-        {['ABOUT', 'Download', 'Leader Board', 'Profile'].map(item => (
+        {['ABOUT', 'Download', 'LeaderBoard', 'Profile'].map(item => (
           <a
             key={item}
             href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-            className='border-r-2 border-background last:border-r-0 py-3 text-center font-display font-semibold text-lg tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase'
+            className='border-r-2 border-background last:border-r-0 py-3 text-center font-display font-semibold text-[8px] md:text-lg tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase'
           >
             {item}
           </a>

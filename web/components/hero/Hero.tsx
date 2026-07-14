@@ -22,7 +22,7 @@ export function Hero () {
   return (
     <section className='relative w-full border border-border'>
       <div className='flex flex-col md:flex-row '>
-        <div className='flex flex-col gap-8 px-8 py-12 border-r w-[75%]'>
+        <div className='flex flex-col gap-8 px-8 py-12 border-r w-auto md:w-[75%]'>
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,7 +72,7 @@ export function Hero () {
           </div>
         </div>
 
-        <div className='px-8 py-12 w-[25%]'>
+        <div className='px-8 py-12 w-auto md:w-[25%]'>
           <HighScores />
         </div>
       </div>
