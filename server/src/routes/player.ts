@@ -67,7 +67,17 @@ playerRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-playerRouter.get("/:id", async (req: Request, res: Response) => {
+playerRouter.get("/total", async (_req: Request, res: Response) => {
+  try {
+    const total = await prisma.players.count();
+    return res.status(200).json({ total });
+  } catch (error) {
+    console.error("Failed to count players", error);
+    return res.status(500).json({ error: "Failed to count players" });
+  }
+});
+
+playerRouter.get("/stats/:id", async (req: Request, res: Response) => {
   try {
     const id = String(req.params.id);
 
@@ -95,14 +105,5 @@ playerRouter.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-playerRouter.get("/total", async (_req: Request, res: Response) => {
-  try {
-    const total = await prisma.players.count();
-    return res.status(200).json({ total });
-  } catch (error) {
-    console.error("Failed to count players", error);
-    return res.status(500).json({ error: "Failed to count players" });
-  }
-});
 
 export default playerRouter;

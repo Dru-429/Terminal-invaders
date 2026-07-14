@@ -7,8 +7,8 @@ const scoreRouter = express.Router();
 scoreRouter.post("/", async (req: Request, res: Response) => {
   try {
     const { playerId, score } = req.body;
-
-    if (!playerId || typeof score !== "number") {
+    const Intscore = Number(score);
+    if (!playerId || !score) {
       return res.status(400).json({
         error: "playerId and score are required",
       });
@@ -36,7 +36,7 @@ scoreRouter.post("/", async (req: Request, res: Response) => {
       const newScore = await tx.scores.create({
         data: {
           playerId,
-          score,
+          score: Intscore,
         },
       });
 
@@ -49,7 +49,7 @@ scoreRouter.post("/", async (req: Request, res: Response) => {
             increment: 1,
           },
           ...(isHighestScore && {
-            highestScore: score,
+            highestScore: Intscore,
           }),
         },
       });
@@ -93,6 +93,12 @@ scoreRouter.get("/:playerId", async (req, res) => {
         error: "No scores found"
       })    
     }
+
+    res.status(200).send({
+      scores: scoresArray,
+      page: page,
+      message: "Scores fetched Succesfully"
+    })
   } catch (error) {
     console.error(error);
     res.status(500).json({
