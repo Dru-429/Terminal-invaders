@@ -24,7 +24,7 @@ const panels = [
 
 export function Comics () {
   return (
-    <section className='relative w-full border border-border px-6 md:px-10 py-16 pb-4 md:py-24'>
+    <section id="about" className='relative w-full border border-border px-6 md:px-10 py-16 pb-4 md:py-24'>
       {/* Masthead */}
       <div className='mb-8 grid grid-cols-1 gap-6 border-b-2 border-double border-foreground/40 pb-6 md:grid-cols-2 md:items-end'>
         <div>

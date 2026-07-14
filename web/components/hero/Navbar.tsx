@@ -83,7 +83,7 @@ export function Navbar () {
       {/* Top row */}
       <div className='grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-stretch border border-border bg-background'>
 
-        <div className='hidden flex items-center justify-center p-5 border-b md:border-b-0 md:border-r border-border'>
+        <div className='hidden md:flex items-center justify-center p-5 border-b md:border-b-0 md:border-r border-border'>
           <div className='flex items-center gap-2 text-secondary'>
             <Invader className='h-20 w-auto' />
           </div>
