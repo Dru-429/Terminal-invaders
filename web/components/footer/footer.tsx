@@ -138,8 +138,8 @@ function Column ({
   items: { label: string; href: string }[]
 }) {
   return (
-    <div>
-      <div className='text-[10px] font-mono tracking-[0.35em] text-secondary uppercase mb-6'>
+    <div className="mt-18">
+      <div className='text-[12px] font-mono tracking-[0.35em] text-secondary uppercase my-6'>
         {title}
       </div>
       <ul className='flex flex-col gap-4'>
@@ -149,7 +149,7 @@ function Column ({
               href={it.href}
               target={it.href.startsWith('http') ? '_blank' : undefined}
               rel='noreferrer noopener'
-              className='group flex items-center justify-between font-mono text-[12px] tracking-[0.15em] text-foreground/85 hover:text-secondary transition-colors'
+              className='group flex items-center justify-between font-mono text-[12px] tracking-[0.15em] text-foreground  hover:text-zinc-100 hover:scale-105 transition-all'
             >
               <span>{it.label}</span>
               <span className='text-foreground/40 group-hover:text-secondary transition-all duration-300 group-hover:translate-x-1'>
@@ -273,7 +273,7 @@ const wrapperRef = useRef<HTMLDivElement>(null);
             © {year} DRU. ALL RIGHTS RESERVED.
           </div>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr] gap-12 md:gap-16'>
+        <div className='grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr] gap-12 md:gap-16 md:pr-10'>
           {/* Transmission log + tower */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -283,7 +283,7 @@ const wrapperRef = useRef<HTMLDivElement>(null);
             className='flex flex-col gap-6'
           >
             <TransmissionTower className='w-24 h-auto text-secondary' />
-            <div className='text-[10px] font-mono tracking-[0.35em] text-secondary uppercase'>
+            <div className='text-[12px] font-mono tracking-[0.35em] text-secondary uppercase'>
               Transmission Log / 008
             </div>
             <div className='font-mono text-[12px] leading-[1.9] text-foreground/85 tracking-wide'>

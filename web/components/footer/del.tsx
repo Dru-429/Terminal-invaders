@@ -14,8 +14,9 @@ export default function FooterLogo () {
             rgba(106,137,160,.24) 42%,
             rgba(8,46,59,.10) 65%,
             transparent 85%
-          )`,
-          filter: 'blur(80px)',
+          )
+        `,
+          filter: 'blur(90px)'
         }}
       />
 
@@ -23,22 +24,31 @@ export default function FooterLogo () {
       <div
         className='pointer-events-none absolute left-1/2 bottom-0 h-[280px] w-[950px] -translate-x-1/2 rounded-full'
         style={{
-          background:
-            'linear-gradient(90deg, rgba(59,130,246,.25), rgba(139,92,246,.35), rgba(59,130,246,.25))',
-          filter: 'blur(100px)',
+          background: `
+            linear-gradient(
+              90deg,
+              rgba(28,46,59,.12),
+              rgba(74,141,183,.30),
+              rgba(106,137,160,.26),
+              rgba(74,141,183,.30),
+              rgba(28,46,59,.12)
+            )
+          `,
+          filter: 'blur(120px)'
         }}
       />
 
       {/* Logo */}
       <h2 className='relative text-center -bottom-10'>
         <span
-          className='select-none font-display font-bold uppercase tracking-tight text-foreground/40 text-[20vw] md:text-[10vw]  '
+          className='select-none font-display uppercase tracking-tight text-foreground/50 text-[20vw] md:text-[10vw]  '
           style={{
             lineHeight: 0.8,
             textShadow: `
-              0 0 20px rgba(255,255,255,.15),
-              0 0 60px rgba(99,102,241,.3)
-            `
+            0 0 12px rgba(242,220,201,.08),
+            0 0 32px rgba(74,141,183,.22),
+            0 0 72px rgba(74,141,183,.14)
+          `
           }}
         >
           TERMINAL INVADERS
