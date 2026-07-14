@@ -23,9 +23,9 @@ export default function Home () {
         {/* <div className='md:min-h-screen bg-transparent'></div> */}
       </main>
       <div className='h-screen relative bg-transparent'>
-        <footer className='w-full fixed bottom-0 '>
+        <div className='w-full fixed bottom-0 '>
           <Footer />
-        </footer>
+        </div>
       </div>
     </>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import FooterLogo from './footerLogo';
+import FooterLogo from './footerLogo'
 
 function TransmissionTower ({ className = '' }: { className?: string }) {
   // Pixel-art transmission tower with radiating signal waves
@@ -166,11 +166,11 @@ export function Footer () {
   const year = new Date().getFullYear()
   return (
     <footer className='relative '>
-      <div
+      {/* <div
         className='pointer-events-none absolute inset-0 opacity-40'
         style={{ background: 'var(--scanline)' }}
         aria-hidden
-      />
+      /> */}
 
       <div className='relative mx-auto px-6 md:px-6 pt-20 md:pt-28'>
         {/* Terminal bar */}
@@ -188,11 +188,10 @@ export function Footer () {
             <span className='text-foreground/25 mx-2'>|</span>
             <span>~/terminal-invaders/footer.log</span>
           </div>
-        <div className='absolute right-4 translate-y-8 font-mono text-[11px] text-muted-foreground tracking-[0.2em]'>
-          © {year} DRU. ALL RIGHTS RESERVED.
+          <div className='absolute right-4 translate-y-8 font-mono text-[11px] text-muted-foreground tracking-[0.2em]'>
+            © {year} DRU. ALL RIGHTS RESERVED.
+          </div>
         </div>
-        </div>
-
         <div className='grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr] gap-12 md:gap-16'>
           {/* Transmission log + tower */}
           <motion.div
@@ -226,12 +225,7 @@ export function Footer () {
 
         <div className="my-10">...</div>
         {/* Big ambient wordmark */}
-        <div
-          className='pointer-events-none select-none mt-28 font-display text-[18vw] md:text-[10vw] leading-none tracking-tight text-foreground/[0.04] text-center overflow-hidden uppercase'
-          aria-hidden
-        >
-          Terminal Invaders
-        </div>
+        <FooterLogo />
       </div>
     </footer>
   )
