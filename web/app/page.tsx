@@ -6,6 +6,7 @@ import { Comics } from '@/components/comic/Comic';
 import { MeetDeveloper } from '@/components/meetDev/MeetDev';
 import Downloads from '@/components/downloads/Downloads';
 import { Roadmap } from '@/components/roadmap/roadmap';
+import { Footer } from '@/components/footer/footer';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <OpenSource />
       <Comics />
       <MeetDeveloper />
+      <Footer />
     </main>
   );
 }
