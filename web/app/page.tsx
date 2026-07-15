@@ -11,7 +11,7 @@ import { Footer } from '@/components/footer/footer'
 export default function Home () {
   return (
     <>
-      <main className='relative min-h-screen w-100% p-10 z-20 bg-background'>
+      <main className='relative min-h-screen w-full p-10 z-20 bg-background'>
         <Navbar />
         <Hero />
         <Ctrl />

@@ -21,7 +21,7 @@ export default function FooterLogo () {
 
       {/* Secondary Glow */}
       <div
-        className='pointer-events-none absolute left-1/2 bottom-0 h-[280px] w-[950px] -translate-x-1/2 rounded-full'
+        className='pointer-events-none absolute left-1/2 bottom-0 h-[280px] max-w-[950px] w-full -translate-x-1/2 rounded-full'
         style={{
           background:
             'linear-gradient(90deg, rgba(59,130,246,.25), rgba(139,92,246,.35), rgba(59,130,246,.25))',
@@ -46,7 +46,7 @@ export default function FooterLogo () {
       </h2>
 
       {/* Bottom Fade */}
-      <div className='w-screen pointer-events-none absolute inset-x-0 bottom-0 -left-5 h-20 bg-gradient-to-t from-background to-transparent' />
+      <div className='pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent' />
     </div>
   )
 }
