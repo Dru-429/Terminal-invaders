@@ -43,7 +43,7 @@ export const api = {
     j<{ players: LeaderboardPlayer[]; message: string }>(
       `/api/v1/leaderboard/${scope}?page=${page}&limit=${limit}`,
     ),
-  player: (id: string) => j<PlayerSummary>(`/api/v1/player/${id}`),
+  player: (id: string) => j<PlayerSummary>(`/api/v1/player/stats/${id}`),
   scores: (id: string, page: number, limit = 10) =>
     j<{ scores: ScoreEntry[]; page: number; message: string }>(
       `/api/v1/score/${id}?page=${page}&limit=${limit}`,
