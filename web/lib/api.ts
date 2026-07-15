@@ -1,6 +1,6 @@
-export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ||
-  "http://localhost:3000";
+const rawBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+// Ensure API_BASE is the root URL (no trailing slash, no /api/v1 suffix).
+export const API_BASE = rawBase.replace(/\/api\/v1\/?$/, "").replace(/\/$/, "");
 
 export type LeaderboardScope = "global" | "weekly" | "daily";
 
@@ -41,11 +41,11 @@ async function j<T>(path: string): Promise<T> {
 export const api = {
   leaderboard: (scope: LeaderboardScope, page: number, limit = 10) =>
     j<{ players: LeaderboardPlayer[]; message: string }>(
-      `/api/v1/leaderboard/${scope}?page=${page}&limit=${limit}`
+      `/api/v1/leaderboard/${scope}?page=${page}&limit=${limit}`,
     ),
   player: (id: string) => j<PlayerSummary>(`/api/v1/player/${id}`),
   scores: (id: string, page: number, limit = 10) =>
     j<{ scores: ScoreEntry[]; page: number; message: string }>(
-      `/api/v1/score/${id}?page=${page}&limit=${limit}`
+      `/api/v1/score/${id}?page=${page}&limit=${limit}`,
     ),
 };
