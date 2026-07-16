@@ -111,7 +111,7 @@ export function Navbar () {
             href={WEBSITE_URL}
           className='font-display text-3xl md:text-8xl lg:text-7xl font-bold tracking-[0.04em] text-foreground leading-none'>
             TERMINAL INVADERS
-          </h1>
+          </Link>
 
           <p className='mt-2 text-[10px] md:text-lg font-mono tracking-[0.3em] font-semibold text-foreground uppercase text-center'>
             RETRO GAME. MORDERN TERMINAL.

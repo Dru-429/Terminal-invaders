@@ -137,7 +137,7 @@ const RESOURCES = [
   { label: 'REPORT A BUG', href: 'https://github.com/Dru-429/Terminal-invaders/issues' }
 ]
 
-function Column (
+function Column({
   title,
   items
 }: {

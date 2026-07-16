@@ -1,7 +1,17 @@
 {
   "name": "web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "homepage": "https://www.dhruvsahoo.me",
+  "keywords": [
+    "terminal-invaders",
+    "arcade",
+    "retro-game",
+    "leaderboard",
+    "game-profile",
+    "nextjs",
+    "tailwindcss"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
