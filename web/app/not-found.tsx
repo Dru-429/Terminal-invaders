@@ -3,8 +3,14 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
+const STARS = Array.from({ length: 40 }, (_, i) => ({
+  left: (i * 37) % 100,
+  top: (i * 61) % 100,
+  duration: 2 + (i % 4),
+  delay: (i % 6) * 0.4
+}))
 
-export default function NotFound () {
+export default function NotFound() {
   return (
     <main className='relative min-h-screen overflow-hidden bg-background text-foreground'>
       {/* Grid */}
@@ -12,9 +18,9 @@ export default function NotFound () {
         className='absolute inset-0 opacity-20'
         style={{
           backgroundImage: `
-          linear-gradient(hsl(var(--secondary)/0.08) 1px, transparent 1px),
-          linear-gradient(90deg,hsl(var(--secondary)/0.08) 1px, transparent 1px)
-        `,
+            linear-gradient(hsl(var(--secondary)/0.08) 1px, transparent 1px),
+            linear-gradient(90deg,hsl(var(--secondary)/0.08) 1px, transparent 1px)
+          `,
           backgroundSize: '42px 42px'
         }}
       />
@@ -29,7 +35,7 @@ export default function NotFound () {
       />
 
       {/* Floating Stars */}
-      {Array.from({ length: 40 }).map((_, i) => (
+      {STARS.map((star, i) => (
         <motion.div
           key={i}
           className='absolute h-[2px] w-[2px] rounded-full bg-secondary'
@@ -43,12 +49,12 @@ export default function NotFound () {
           }}
           transition={{
             repeat: Infinity,
-            duration: 2 + Math.random() * 3,
-            delay: Math.random() * 3
+            duration: star.duration,
+            delay: star.delay
           }}
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`
+            left: `${star.left}%`,
+            top: `${star.top}%`
           }}
         />
       ))}
@@ -61,64 +67,27 @@ export default function NotFound () {
           aria-hidden
         >
           <g fill='var(--color-secondary)'>
-            {/* dome */}
+            {/* Dome */}
             <rect x='80' y='10' width='40' height='6' />
             <rect x='72' y='16' width='56' height='6' />
             <rect x='66' y='22' width='68' height='6' />
-            {/* body */}
+
+            {/* Body */}
             <rect x='40' y='30' width='120' height='8' />
             <rect x='24' y='38' width='152' height='10' />
             <rect x='16' y='48' width='168' height='6' />
-            {/* lights */}
-            <rect
-              x='34'
-              y='42'
-              width='6'
-              height='6'
-              fill='var(--color-foreground)'
-            />
-            <rect
-              x='54'
-              y='42'
-              width='6'
-              height='6'
-              fill='var(--color-foreground)'
-            />
-            <rect
-              x='74'
-              y='42'
-              width='6'
-              height='6'
-              fill='var(--color-foreground)'
-            />
-            <rect
-              x='94'
-              y='42'
-              width='6'
-              height='6'
-              fill='var(--color-foreground)'
-            />
-            <rect
-              x='114'
-              y='42'
-              width='6'
-              height='6'
-              fill='var(--color-foreground)'
-            />
-            <rect
-              x='134'
-              y='42'
-              width='6'
-              height='6'
-              fill='var(--color-foreground)'
-            />
-            <rect
-              x='154'
-              y='42'
-              width='6'
-              height='6'
-              fill='var(--color-foreground)'
-            />
+
+            {/* Lights */}
+            {[34, 54, 74, 94, 114, 134, 154].map(x => (
+              <rect
+                key={x}
+                x={x}
+                y='42'
+                width='6'
+                height='6'
+                fill='var(--color-foreground)'
+              />
+            ))}
           </g>
         </motion.svg>
 
@@ -134,13 +103,13 @@ export default function NotFound () {
             repeat: Infinity,
             repeatDelay: 5
           }}
-          className='font-display text-[110px] md:text-[180px] leading-none tracking-tight'
+          className='font-display leading-none tracking-tight text-[110px] md:text-[180px]'
           style={{
             color: 'hsl(var(--foreground))',
             textShadow: `
-            0 0 8px hsl(var(--secondary)/.4),
-            0 0 35px hsl(var(--secondary)/.15)
-          `
+              0 0 8px hsl(var(--secondary)/.4),
+              0 0 35px hsl(var(--secondary)/.15)
+            `
           }}
         >
           404
@@ -150,7 +119,7 @@ export default function NotFound () {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className='font-display uppercase tracking-[.4em] text-secondary text-xs md:text-sm'
+          className='font-display text-xs uppercase tracking-[.4em] text-secondary md:text-sm'
         >
           SIGNAL LOST
         </motion.h2>
@@ -159,9 +128,9 @@ export default function NotFound () {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className='mt-8 max-w-xl text-center text-muted-foreground font-mono leading-7'
+          className='mt-8 max-w-xl text-center font-mono leading-7 text-muted-foreground'
         >
-          The invasion fleet couldn't locate this transmission.
+          The invasion fleet could not locate this transmission.
           <br />
           Either the page never existed or it has been destroyed by the
           invaders.
