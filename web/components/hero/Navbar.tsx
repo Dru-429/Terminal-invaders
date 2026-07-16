@@ -2,6 +2,15 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { WEBSITE_URL, PERSONAL_GITHUB_URL, PROJECT_NPM_URL, PERSONAL_X_URL } from '@/lib/links'
+import Link from 'next/link';
+
+const NAV = [
+  { label: 'ABOUT', href: `${WEBSITE_URL}/#about` },
+  { label: 'DOWNLOAD', href: `${WEBSITE_URL}/#download` },
+  { label: 'LEADERBOARD', href: '/leaderboard' },
+  { label: 'PROFILE', href: '/player' }
+]
 
 function formatToday () {
   return new Date()
@@ -98,7 +107,9 @@ export function Navbar () {
             {today || 'WEDBNESDAY, JULY 20, 2005'}
           </p>
 
-          <h1 className='font-display text-3xl md:text-8xl lg:text-7xl font-bold tracking-[0.04em] text-foreground leading-none'>
+          <Link 
+            href={WEBSITE_URL}
+          className='font-display text-3xl md:text-8xl lg:text-7xl font-bold tracking-[0.04em] text-foreground leading-none'>
             TERMINAL INVADERS
           </h1>
 
@@ -109,21 +120,21 @@ export function Navbar () {
 
         {/* Right Column: Market text / Signals */}
         <div className='flex flex-row  md:flex-col items-center justify-between md:justify-center text-center p-5 border-t md:border-t-0 md:border-l border-border  text-[15px] tracking-[0.15em] text-foreground gap-3'>
-            <p className='font-bold hover:text-secondary hover:text cursor-pointer '>NPM</p>
-            <p className='font-bold hover:text-secondary hover:text cursor-pointer '>GITHUB</p>
-            <p className='font-bold hover:text-secondary hover:text cursor-pointer '>TWITTER</p>
+            <a href={PROJECT_NPM_URL} target='_blank' rel='noreferrer noopener' className='font-bold hover:text-secondary hover:text cursor-pointer'>NPM</a>
+            <a href={PERSONAL_GITHUB_URL} target='_blank' rel='noreferrer noopener' className='font-bold hover:text-secondary hover:text cursor-pointer'>GITHUB</a>
+            <a href={PERSONAL_X_URL} target='_blank' rel='noreferrer noopener' className='font-bold hover:text-secondary hover:text cursor-pointer'>TWITTER</a>
         </div>
       </div>
 
       {/* Nav row */}
       <nav className='grid grid-cols-4 border border-border bg-border'>
-        {['ABOUT', 'Download', 'LeaderBoard', 'Profile'].map(item => (
+        {NAV.map((item, index) => (
           <a
-            key={item}
-            href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
+            key={index}
+            href={item.href}
             className='border-r-2 border-background last:border-r-0 py-3 text-center font-display font-semibold text-[8px] md:text-lg tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase'
           >
-            {item}
+            {item.label}
           </a>
         ))}
       </nav>

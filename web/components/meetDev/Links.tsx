@@ -1,10 +1,16 @@
 import { motion } from "framer-motion";
+import {
+  PERSONAL_GITHUB_URL,
+  PERSONAL_X_URL,
+  PERSONAL_PORTFOLIO_URL,
+  PERSONAL_LINKEDIN_URL,
+} from "@/lib/links";
 
 const LINKS = [
-  { label: "GitHub", href: "https://github.com/Dru-429" },
-  { label: "X / Twitter", href: "https://x.com/10xdhruv" },
-  { label: "Portfolio", href: "https://www.dhruvsahoo.me/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/dhruvsahoo/" },
+  { label: "GitHub", href: PERSONAL_GITHUB_URL },
+  { label: "X / Twitter", href: PERSONAL_X_URL },
+  { label: "Portfolio", href: PERSONAL_PORTFOLIO_URL },
+  { label: "LinkedIn", href: PERSONAL_LINKEDIN_URL },
 ];
 
 export default function QuickLinks() {

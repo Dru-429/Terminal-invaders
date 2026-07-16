@@ -1,8 +1,15 @@
 'use client'
 
 import FooterLogo from './footerLogo'
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { useEffect, useRef } from 'react'
+
+import {
+  WEBSITE_URL,
+  PROJECT_GITHUB_URL,
+  PERSONAL_X_URL,
+  PROJECT_NPM_URL
+} from '@/lib/links'
 
 function TransmissionTower ({ className = '' }: { className?: string }) {
   // Pixel-art transmission tower with radiating signal waves
@@ -109,28 +116,28 @@ function TransmissionTower ({ className = '' }: { className?: string }) {
 }
 
 const NAV = [
-  { label: 'ABOUT', href: '#about' },
-  { label: 'DOWNLOAD', href: '#download' },
-  { label: 'LEADERBOARD', href: '#leaderboard' },
-  { label: 'PROFILE', href: '#profile' }
+  { label: 'ABOUT', href: `${WEBSITE_URL}/#about` },
+  { label: 'DOWNLOAD', href: `${WEBSITE_URL}/#download` },
+  { label: 'LEADERBOARD', href: '/leaderboard' },
+  { label: 'PROFILE', href: '/player' }
 ]
 const COMMUNITY = [
-  { label: 'GITHUB', href: 'https://github.com' },
-  { label: 'TWITTER / X', href: 'https://x.com' },
+  { label: 'GITHUB', href: PROJECT_GITHUB_URL },
+  { label: 'TWITTER / X', href: PERSONAL_X_URL },
   {
     label: 'NPM PACKAGE',
-    href: 'https://www.npmjs.com/package/terminal-invaders'
+    href: PROJECT_NPM_URL
   },
-  { label: 'DISCUSSIONS', href: '#' }
+  // { label: 'DISCUSSIONS', href: '' }
 ]
 const RESOURCES = [
-  { label: 'DOCUMENTATION', href: '#' },
-  { label: 'CHANGELOG', href: '#' },
-  { label: 'CONTRIBUTING', href: '#' },
-  { label: 'REPORT A BUG', href: '#' }
+  { label: 'DOCUMENTATION', href: `https://github.com/Dru-429/Terminal-invaders#readme` },
+  { label: 'CHANGELOG', href: 'https://npmx.dev/package/terminal-invaders' },
+  { label: 'CONTRIBUTING', href: 'https://github.com/Dru-429/Terminal-invaders' },
+  { label: 'REPORT A BUG', href: 'https://github.com/Dru-429/Terminal-invaders/issues' }
 ]
 
-function Column ({
+function Column (
   title,
   items
 }: {
@@ -138,7 +145,7 @@ function Column ({
   items: { label: string; href: string }[]
 }) {
   return (
-    <div className="mt-18">
+    <div className='mt-18'>
       <div className='text-[12px] font-mono tracking-[0.35em] text-secondary uppercase my-6'>
         {title}
       </div>
@@ -166,92 +173,90 @@ function Column ({
 export function Footer () {
   const year = new Date().getFullYear()
 
-const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
-  const mouseX = useMotionValue(-500);
-  const mouseY = useMotionValue(-500);
+  const mouseX = useMotionValue(-500)
+  const mouseY = useMotionValue(-500)
 
   const springX = useSpring(mouseX, {
     stiffness: 180,
-    damping: 22,
-  });
+    damping: 22
+  })
 
   const springY = useSpring(mouseY, {
     stiffness: 180,
-    damping: 22,
-  });
+    damping: 22
+  })
 
   useEffect(() => {
-    const wrapper = wrapperRef.current;
-    if (!wrapper) return;
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
 
     const handleMove = (e: MouseEvent) => {
-      const rect = wrapper.getBoundingClientRect();
+      const rect = wrapper.getBoundingClientRect()
 
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    };
+      mouseX.set(e.clientX - rect.left)
+      mouseY.set(e.clientY - rect.top)
+    }
 
     const leave = () => {
-      mouseX.set(-500);
-      mouseY.set(-500);
-    };
+      mouseX.set(-500)
+      mouseY.set(-500)
+    }
 
-    wrapper.addEventListener("mousemove", handleMove);
-    wrapper.addEventListener("mouseleave", leave);
+    wrapper.addEventListener('mousemove', handleMove)
+    wrapper.addEventListener('mouseleave', leave)
 
     return () => {
-      wrapper.removeEventListener("mousemove", handleMove);
-      wrapper.removeEventListener("mouseleave", leave);
-    };
-  }, []);
+      wrapper.removeEventListener('mousemove', handleMove)
+      wrapper.removeEventListener('mouseleave', leave)
+    }
+  }, [])
 
   return (
     <footer className='relative ' ref={wrapperRef}>
-
-       <motion.div
+      <motion.div
         style={{
           left: springX,
-          top: springY,
+          top: springY
         }}
-        className="pointer-events-none absolute h-32 w-32
+        className='pointer-events-none absolute h-32 w-32
         -translate-x-1/2
         -translate-y-1/2
         rounded-full
         bg-[#4AA8D7]/20
-        blur-2xl"
+        blur-2xl'
       />
 
       {/* Pixel Distortion */}
       <motion.div
         style={{
           left: springX,
-          top: springY,
+          top: springY
         }}
-        className="pointer-events-none absolute
+        className='pointer-events-none absolute
         h-44
         w-44
         -translate-x-1/2
-        -translate-y-1/2"
+        -translate-y-1/2'
       >
         <div
-          className="h-full w-full"
+          className='h-full w-full'
           style={{
             backgroundImage: `
               linear-gradient(rgba(242,220,201,.35) 1px, transparent 1px),
               linear-gradient(90deg, rgba(242,220,201,.35) 1px, transparent 1px)
             `,
-            backgroundSize: "15px 15px",
+            backgroundSize: '15px 15px',
             opacity: 0.4,
-            filter: "blur(.4px)",
+            filter: 'blur(.4px)',
             maskImage:
-              "radial-gradient(circle at center, black 30%, transparent 80%)",
+              'radial-gradient(circle at center, black 30%, transparent 80%)',
             WebkitMaskImage:
-              "radial-gradient(circle at center, black 30%, transparent 80%)",
+              'radial-gradient(circle at center, black 30%, transparent 80%)'
           }}
         />
       </motion.div>
-
 
       <div className='relative mx-auto px-6 md:px-6 pt-20 md:pt-28'>
         {/* Terminal bar */}
@@ -304,7 +309,7 @@ const wrapperRef = useRef<HTMLDivElement>(null);
           <Column title='Resources' items={RESOURCES} />
         </div>
 
-        <div className="my-10">...</div>
+        <div className='my-10'>...</div>
         {/* Big ambient wordmark */}
         <FooterLogo />
       </div>
