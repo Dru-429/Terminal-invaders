@@ -7,13 +7,13 @@
 ### Install from package
 
 ```bash
-npm i terminal-invaders
+npm i terminal-invaders@latest
 npx terminal-invaders
 ```
 or
 
 ```bash
-npm install -g terminal-invaders
+npm install -g terminal-invaders@latest
 ```
 
 ### Install from source (bash)

@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { HighScores } from './HighScore'
+import { INSTALL_CLI } from '@/lib/links';
 
-const INSTALL_CMD = 'npm install -g terminal-invaders'
+const INSTALL_CMD = INSTALL_CLI
 
 export function Hero () {
   const [copied, setCopied] = useState(false)

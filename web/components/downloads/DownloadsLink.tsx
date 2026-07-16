@@ -1,12 +1,13 @@
 'use client'
 
+import { INSTALL_CLI } from '@/lib/links';
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 type Manager = 'NPM' | 'YARN' | 'PNPM' | 'BUN'
 
 const INSTALL: Record<Manager, string> = {
-  NPM: 'npm install -g terminal-invaders',
+  NPM: INSTALL_CLI,
   YARN: 'yarn global add terminal-invaders',
   PNPM: 'pnpm add -g terminal-invaders',
   BUN: 'bun add -g terminal-invaders'

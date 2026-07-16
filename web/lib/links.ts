@@ -5,5 +5,6 @@ export const PROJECT_NPM_URL = "https://www.npmjs.com/package/terminal-invaders"
 export const PERSONAL_X_URL = "https://x.com/10xdhruv";
 export const PERSONAL_LINKEDIN_URL = "https://www.linkedin.com/in/dhruvsahoo/";
 export const PERSONAL_PORTFOLIO_URL = "https://www.dhruvsahoo.me/";
+export const INSTALL_CLI = "npm install -g terminal-invaders@latest"
 
 
