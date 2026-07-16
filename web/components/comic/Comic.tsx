@@ -96,6 +96,9 @@ export function Comics () {
               whileHover={{
                 filter: 'grayscale(0%)',
               }}
+              whileTap={{
+                filter: 'grayscale(0%)',
+              }}
               transition={{
                 duration: 0.2, 
               }}

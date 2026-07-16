@@ -3,13 +3,6 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
-const UFO = `
-      ▄████▄
-   ▄████████▄
- ▄████████████▄
-████████████████
-▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-`
 
 export default function NotFound () {
   return (
