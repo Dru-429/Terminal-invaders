@@ -1,3 +1,5 @@
+"use client"
+
 import { Suspense } from "react";
 import { PageShell } from "@/components/pageShell";
 import LeaderboardClient from "./LeaderboardClient";
