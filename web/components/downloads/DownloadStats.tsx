@@ -29,7 +29,7 @@ function Stat ({
       <p className='text-[10px] tracking-[0.3em] text-muted-foreground'>
         {label}
       </p>
-      <p className='mt-2 font-display text-2xl md:text-3xl text-foreground'>
+      <p className='mt-2 font-mono text-2xl md:text-3xl text-foreground'>
         {loading ? <span className='text-muted-foreground'>···</span> : value}
       </p>
     </div>

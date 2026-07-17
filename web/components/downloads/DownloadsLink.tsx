@@ -65,7 +65,7 @@ export function DownloadLink () {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className='max-w-3xl'
       >
-        <h2 className='font-display text-4xl md:text-7xl font-bold uppercase tracking-[0.02em] text-foreground leading-[0.95]'>
+        <h2 className='font-display text-4xl md:text-7xl font uppercase tracking-[0.02em] text-foreground leading-[0.95]'>
           Download & Install
         </h2>
         <p className='mt-3 text-[11px] tracking-[0.4em] text-muted-foreground'>

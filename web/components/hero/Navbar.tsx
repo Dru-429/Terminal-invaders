@@ -109,7 +109,7 @@ export function Navbar () {
 
           <Link 
             href={WEBSITE_URL}
-          className='font-display text-3xl md:text-8xl lg:text-7xl font-bold tracking-[0.04em] text-foreground leading-none'>
+          className='font-pixel-line text-3xl md:text-8xl lg:text-7xl font- tracking-[0.04em] text-foreground leading-none'>
             TERMINAL INVADERS
           </Link>
 
@@ -120,9 +120,9 @@ export function Navbar () {
 
         {/* Right Column: Market text / Signals */}
         <div className='flex flex-row  md:flex-col items-center justify-between md:justify-center text-center p-5 border-t md:border-t-0 md:border-l border-border  text-[15px] tracking-[0.15em] text-foreground gap-3'>
-            <a href={PROJECT_NPM_URL} target='_blank' rel='noreferrer noopener' className='font-bold hover:text-secondary hover:text cursor-pointer'>NPM</a>
-            <a href={PERSONAL_GITHUB_URL} target='_blank' rel='noreferrer noopener' className='font-bold hover:text-secondary hover:text cursor-pointer'>GITHUB</a>
-            <a href={PERSONAL_X_URL} target='_blank' rel='noreferrer noopener' className='font-bold hover:text-secondary hover:text cursor-pointer'>TWITTER</a>
+            <a href={PROJECT_NPM_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>NPM</a>
+            <a href={PERSONAL_GITHUB_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>GITHUB</a>
+            <a href={PERSONAL_X_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>TWITTER</a>
         </div>
       </div>
 

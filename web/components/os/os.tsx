@@ -21,7 +21,7 @@ export function OpenSource () {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className='mt-6 font-display text-4xl md:text-7xl font-bold uppercase leading-[0.95] text-foreground'
+            className='mt-6 font-display text-4xl md:text-7xl font uppercase leading-[0.95] text-foreground'
           >
             Built For The
             <br />

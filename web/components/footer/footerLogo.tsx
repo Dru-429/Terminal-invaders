@@ -8,14 +8,8 @@ export default function FooterLogo () {
         className='pointer-events-none absolute inset-x-0 bottom-0 h-[420px]'
         style={{
           background: `
-          radial-gradient(
-            ellipse at bottom,
-            rgba(79,141,183,.42) 0%,
-            rgba(106,137,160,.24) 42%,
-            rgba(8,46,59,.10) 65%,
-            transparent 85%
-          )`,
-          filter: 'blur(80px)',
+          radial-gradient( ellipse at bottom, rgba(76,110,255,.45) 0%, rgba(90,70,255,.25) 40%, transparent 80% )`,
+          filter: 'blur(100px)'
         }}
       />
 
@@ -25,14 +19,14 @@ export default function FooterLogo () {
         style={{
           background:
             'linear-gradient(90deg, rgba(59,130,246,.25), rgba(139,92,246,.35), rgba(59,130,246,.25))',
-          filter: 'blur(100px)',
+          filter: 'blur(100px)'
         }}
       />
 
       {/* Logo */}
       <h2 className='relative text-center -bottom-10'>
         <span
-          className='select-none font-display font-bold uppercase tracking-tight text-foreground/40 text-[20vw] md:text-[10vw]  '
+          className='select-none font-pixel-line uppercase tracking-tight text-zinc-100 text-[20vw] md:text-[10vw]  '
           style={{
             lineHeight: 0.8,
             textShadow: `

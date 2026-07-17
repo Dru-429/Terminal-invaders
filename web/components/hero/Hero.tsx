@@ -23,13 +23,13 @@ export function Hero () {
   return (
     <section className='relative w-full border border-border'>
       <div className='flex flex-col md:flex-row '>
-        <div className='flex flex-col gap-8 px-8 py-12 border-r w-auto md:w-[75%]'>
+        <div className='flex flex-col gap-8 px-8 p-16 md:py-24 border-r w-auto md:w-[75%]'>
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
           >
-            <h2 className='font-display text-5xl md:text-8xl font-bold uppercase tracking-tight text-foreground leading-[0.95]'>
+            <h2 className='font-display text-5xl md:text-8xl font uppercase tracking-tight text-foreground leading-[0.95]'>
               Defend The Terminal
               {/* <br /> */}
             </h2>

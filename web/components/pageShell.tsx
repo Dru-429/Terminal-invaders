@@ -21,7 +21,7 @@ export function PageShell ({
         <p className='font-mono text-[10px] tracking-[0.4em] text-muted-foreground'>
           {'// '} {crumb}
         </p>
-        <h1 className='mt-3 font-display text-4xl md:text-6xl font-bold tracking-[0.06em] text-foreground uppercase'>
+        <h1 className='mt-3 font-display text-4xl md:text-6xl font tracking-[0.06em] text-foreground uppercase'>
           {title}
         </h1>
         {subtitle ? (
@@ -32,7 +32,7 @@ export function PageShell ({
       </section>
       <section className='px-6 py-10 border border-border '>
         {/* {children} */}
-        <div className='mt-8 flex-1 flex flex-col items-center justify-center min-h-[260px] relative z-10'>
+        <div className='mt-8 flex-1 flex flex-col items-center justify-center min-h-65 relative z-10'>
           <motion.div
             initial={{ opacity: 0.3 }}
             animate={{ opacity: [0.4, 1, 0.4] }}

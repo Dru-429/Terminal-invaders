@@ -24,8 +24,8 @@ const ctrl = () => {
           </p>
         </div>
 
-        <h3 className='mt-3 font-display text-4xl md:text-7xl font-bold uppercase leading-[0.95] text-foreground'>
-          Keeb CTRL
+        <h3 className='mt-3 font-display text-4xl md:text-7xl font uppercase leading-[0.95] text-foreground'>
+          Keyboard cntorls
         </h3>
         <p className='mt-3 max-w-md font-mono text-xs leading-relaxed text-muted-foreground'>
           Six keys stand between you and extinction. Scroll to map each binding.

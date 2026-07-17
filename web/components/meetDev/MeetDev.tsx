@@ -11,11 +11,11 @@ export function MeetDeveloper () {
         ">
 
           <div className='flex items-end justify-between mb-8 m-6'>
-            <div>
+            <div className="md:text-center">
               <div className='text-[10px] md:text-xs font-mono text-secondary tracking-[0.3em] uppercase'>
-                // MANIFEST / 004
+               {`// MANIFEST / 004`}
               </div>
-              <h2 className='font-display text-3xl md:text-5xl uppercase tracking-wider text-foreground mt-2'>
+              <h2 className='font-display text-5xl md:text-7xl uppercase tracking-wider text-foreground mt-2'>
                 Meet the Developer
               </h2>
             </div>
@@ -31,7 +31,7 @@ export function MeetDeveloper () {
           </div>
         </div>
 
-        <div className='w-auto md:w-[20%] flex items-center p-10'>
+        <div className='w-[80vw] md:w-[20%] flex items-center p-2 md:p-10'>
           <QuickLinks />
         </div>
       </div>

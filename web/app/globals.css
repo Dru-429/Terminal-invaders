@@ -5,7 +5,12 @@
 
 @theme {
   --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-display: "Silkscreen", "VT323", "JetBrains Mono", ui-monospace, monospace;
+  --font-display: var(--font-geist-pixel-line),"Silkscreen", "VT323", "JetBrains Mono", ui-monospace, monospace;
+  --font-pixel-square: var(--font-geist-pixel-square);
+  --font-pixel-grid: var(--font-geist-pixel-grid);
+  --font-pixel-circle: var(--font-geist-pixel-circle);
+  --font-pixel-triangle: var(--font-geist-pixel-triangle);
+  --font-pixel-line: var(--font-geist-pixel-line);
 }
 
 /*
@@ -68,18 +73,25 @@
 :root {
   --radius: 0.25rem;
   /* Cyber Drive palette */
-  --background: oklch(15.821% 0.00721 258.412);           /* #0A0B0D */
-  --foreground: oklch(0.92 0.03 70);             /* #F2DCC9 cream */
-  --card: oklch(0.16 0.006 260);                 /* #141619 */
+  --background: oklch(15.821% 0.00721 258.412);
+  /* #0A0B0D */
+  --foreground: oklch(0.92 0.03 70);
+  /* #F2DCC9 cream */
+  --card: oklch(0.16 0.006 260);
+  /* #141619 */
   --card-foreground: oklch(0.92 0.03 70);
   --popover: oklch(0.16 0.006 260);
   --popover-foreground: oklch(0.92 0.03 70);
-  --primary: oklch(0.92 0.03 70);                /* cream */
+  --primary: oklch(0.92 0.03 70);
+  /* cream */
   --primary-foreground: oklch(0.13 0.005 260);
-  --secondary: oklch(0.62 0.08 235);             /* #4A8DB7 blue */
+  --secondary: oklch(0.62 0.08 235);
+  /* #4A8DB7 blue */
   --secondary-foreground: oklch(0.13 0.005 260);
-  --muted: oklch(0.22 0.01 240);                 /* #1C2E3B */
-  --muted-foreground: oklch(0.65 0.03 235);      /* #6A89A0 */
+  --muted: oklch(0.22 0.01 240);
+  /* #1C2E3B */
+  --muted-foreground: oklch(0.65 0.03 235);
+  /* #6A89A0 */
   --accent: oklch(0.62 0.08 235);
   --accent-foreground: oklch(0.13 0.005 260);
   --destructive: oklch(0.65 0.22 25);
@@ -166,6 +178,7 @@
 
 @utility scanlines {
   position: relative;
+
   &::after {
     content: "";
     position: absolute;
@@ -185,11 +198,26 @@
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.96; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.96;
+  }
 }

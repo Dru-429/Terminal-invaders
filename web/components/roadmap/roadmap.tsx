@@ -46,7 +46,7 @@ export function Roadmap() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="max-w-3xl"
       >
-        <h2 className="font-display text-4xl md:text-6xl font-bold uppercase leading-[0.95] text-foreground">
+        <h2 className="font-display text-4xl md:text-6xl font uppercase leading-[0.95] text-foreground">
           The Roadmap
         </h2>
         <p className="mt-3 font-mono text-sm text-muted-foreground">

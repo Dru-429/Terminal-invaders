@@ -49,7 +49,7 @@ export function HighScores () {
         <div className='scale-200 mt-1'>
           <TrophyWithLaurel className='' />
         </div>
-        <h3 className='font-mono text-3xl font-bold tracking-[0.2em] text-foreground uppercase mt-4'>
+        <h3 className='font-mono text-3xl font tracking-[0.2em] text-foreground uppercase mt-4'>
           Leaderboard
         </h3>
       </div>
@@ -60,7 +60,7 @@ export function HighScores () {
           onClick={() => setActiveTab('global')}
           className={`py-2 tracking-[0.15em] uppercase transition-all duration-150 outline-none ${
             activeTab === 'global'
-              ? 'bg-secondary/30 text-foreground font-bold'
+              ? 'bg-secondary/30 text-foreground font'
               : 'text-foreground/40 hover:text-foreground/70 hover:bg-secondary/5'
           }`}
         >
@@ -71,7 +71,7 @@ export function HighScores () {
           onClick={() => setActiveTab('weekly')}
           className={`py-2 tracking-[0.15em] uppercase border-l border-secondary/30 transition-all duration-150 outline-none ${
             activeTab === 'weekly'
-              ? 'bg-secondary/30 text-foreground font-bold'
+              ? 'bg-secondary/30 text-foreground font'
               : 'text-foreground/40 hover:text-foreground/70 hover:bg-secondary/5'
           }`}
         >

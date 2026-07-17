@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import JsonLd from "./json-ld";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
+import { GeistPixelCircle, GeistPixelGrid, GeistPixelLine, GeistPixelSquare, GeistPixelTriangle } from "geist/font/pixel";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${GeistPixelLine.variable} ${GeistPixelSquare.variable}  ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <JsonLd />
