@@ -26,7 +26,7 @@ export default function FooterLogo () {
       {/* Logo */}
       <h2 className='relative text-center -bottom-10'>
         <span
-          className='select-none font-pixel-line uppercase tracking-tight text-zinc-100 text-[20vw] md:text-[10vw]  '
+          className='select-none font-pixel-line uppercase tracking-tight text-zinc-100 text-[24vw] md:text-[10vw]  '
           style={{
             lineHeight: 0.8,
             textShadow: `
@@ -40,7 +40,7 @@ export default function FooterLogo () {
       </h2>
 
       {/* Bottom Fade */}
-      <div className='pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent' />
+      <div className='pointer-events-none w-screen absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent' />
     </div>
   )
 }

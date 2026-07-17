@@ -27,7 +27,7 @@ export function Roadmap() {
   return (
     <section
       id="roadmap"
-      className="relative w-full border border-border px-8 py-16 md:py-24"
+      className="relative w-full border border-border px-6 md:px-8 py-16 md:py-24"
       aria-label="Roadmap"
     >
       <div className="mb-10 flex items-center justify-between">

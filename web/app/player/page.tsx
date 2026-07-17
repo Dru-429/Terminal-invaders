@@ -7,7 +7,7 @@ export default function player(){
   return (
     <div>
       <Navbar /> 
-      <section className='px-6 py-10 border border-border '>
+      <section className='px-3 py-10 border border-border '>
         {/* {children} */}
         <div className='mt-8 flex-1 flex flex-col items-center justify-center min-h-65 relative z-10'>
           <motion.div

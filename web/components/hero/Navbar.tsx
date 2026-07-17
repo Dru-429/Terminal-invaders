@@ -7,9 +7,9 @@ import Link from 'next/link';
 
 const NAV = [
   { label: 'ABOUT', href: `${WEBSITE_URL}/#about` },
+  { label: 'PROFILE', href: '/player' },
   { label: 'DOWNLOAD', href: `${WEBSITE_URL}/#download` },
   { label: 'LEADERBOARD', href: '/leaderboard' },
-  { label: 'PROFILE', href: '/player' }
 ]
 
 function formatToday () {
@@ -119,7 +119,7 @@ export function Navbar () {
         </div>
 
         {/* Right Column: Market text / Signals */}
-        <div className='flex flex-row  md:flex-col items-center justify-between md:justify-center text-center p-5 border-t md:border-t-0 md:border-l border-border  text-[15px] tracking-[0.15em] text-foreground gap-3'>
+        <div className='flex flex-row  md:flex-col items-center justify-between md:justify-center text-center p-2 md:p-5 border-t md:border-t-0 md:border-l border-border  text-[15px] tracking-[0.15em] text-foreground gap-3'>
             <a href={PROJECT_NPM_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>NPM</a>
             <a href={PERSONAL_GITHUB_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>GITHUB</a>
             <a href={PERSONAL_X_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>TWITTER</a>
@@ -127,7 +127,7 @@ export function Navbar () {
       </div>
 
       {/* Nav row */}
-      <nav className='grid grid-cols-4 border border-border bg-border'>
+      <nav className='grid grid-col-3 md:grid-cols-4 border border-border bg-border'>
         {NAV.map((item, index) => (
           <a
             key={index}

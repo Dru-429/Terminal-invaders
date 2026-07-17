@@ -14,7 +14,7 @@ const ctrl = () => {
       </div>
 
       {/* RIGHT */}
-      <div className='md:w-[75%] relative bg-card/40 p-6 md:p-10 md:-pb-20 min-h-[520px] flex flex-col'>
+      <div className='md:w-[75%] relative bg-card/40 p-6 md:p-10 -pb-20 min-h-[520px] flex flex-col'>
         <div className='flex items-start justify-between'>
           <p className='text-[11px] tracking-[0.4em] text-muted-foreground'>
             CONTROLS / 002

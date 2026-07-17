@@ -15,7 +15,7 @@ export function PageShell ({
   children: ReactNode
 }) {
   return (
-    <main className='relative min-h-screen w-full p-10 box-border bg-background text-foreground'>
+    <main className='relative min-h-screen w-full md:p-10 box-border bg-background text-foreground'>
       <Navbar />
       <section className='border border-border px-6 py-10 md:py-14'>
         <p className='font-mono text-[10px] tracking-[0.4em] text-muted-foreground'>

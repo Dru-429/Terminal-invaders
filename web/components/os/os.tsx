@@ -5,9 +5,9 @@ import ArchDiagram from './Arch'
 
 export function OpenSource () {
   return (
-    <section className='relative w-full border border-border p-8'>
+    <section className='relative w-full border border-border md:p-8'>
       <div>
-        <div className='relative p-6 md:p-12'>
+        <div className='relative md:px-6 md:p-12'>
           {/* corner tags */}
           <div className='absolute left-3 top-3 font-mono text-[10px] tracking-[0.3em] text-muted-foreground'>
             MANIFEST / 003
