@@ -127,12 +127,12 @@ export function Navbar () {
       </div>
 
       {/* Nav row */}
-      <nav className='grid grid-col-3 md:grid-cols-4 border border-border bg-border'>
+      <nav className='grid grid-cols-3 md:grid-cols-4 border border-border bg-border'>
         {NAV.map((item, index) => (
           <a
             key={index}
             href={item.href}
-            className='border-r-2 border-background last:border-r-0 py-3 text-center font-display font-semibold text-[8px] md:text-lg tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase'
+            className='border-r-2 border-background md:last:border-r-0 py-3 text-center font-display font-semibold text-[8px] md:text-lg tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase w-full'
           >
             {item.label}
           </a>

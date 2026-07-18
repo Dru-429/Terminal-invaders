@@ -14,7 +14,7 @@ const ctrl = () => {
       </div>
 
       {/* RIGHT */}
-      <div className='md:w-[75%] relative bg-card/40 p-6 md:p-10 -pb-20 min-h-[520px] flex flex-col'>
+      <div className='md:w-[75%] relative bg-card/40 p-6 md:p-10 -pb-20 md:min-h-[520px] flex flex-col'>
         <div className='flex items-start justify-between'>
           <p className='text-[11px] tracking-[0.4em] text-muted-foreground'>
             CONTROLS / 002
@@ -31,7 +31,7 @@ const ctrl = () => {
           Six keys stand between you and extinction. Scroll to map each binding.
         </p>
 
-        <div className='relative md:-mt-4 -mb-20 md:mb-0 flex-1'>
+        <div className='relative md:-mt-4  md:mb-0 flex-1'>
           <KeyDiagram />
         </div>
       </div>{' '}
