@@ -1,30 +1,33 @@
-const ASCII_ART = 
-`        g@M%@%%@N%Nw,,
-       ,M*|\`||*g@NM=]mM%g||%N,
-      p!\`\`   '!  |''\`  '''|||jhlj%w
-     ,@L\`     ,,        '''\`|j%M]%M
-    ]j'\` .,wp@pw,   \`.    ''''|%Wg
-   /{|||@@@@@@@@pp.           ||||
-  '\`'  ]@@@@@@@@@@@@p       ,  ,'''
- , :]%%@@@%%%%%%k%h '*||mkr    *
- '  j%M\`     |jkk\`  ~nrn=|i  ;\`
-  !  jrr*\`\`             \`"!  L''!
-   j  lp;,.  ,/ @@   ,;\\nmy " ,~
-   i r @@@mmHM @@@@ \`^****M*,p ;,
-   | ]@@@HHH]g@M%%%%H,jmgpmb% j
-   ;;%%%%k%@[,.n|;.;j%%k|%k%%',[
-   H|%%%%%j%k||,;;j;!!'|%ij}]@
-    "djjmkL,"]]|,,,,wwxw;|#kjk\`
-     %;%km%%%M%M|%%jkkii||||[
-       kjj%%kkkl|!||||||j|||"
-        |jm%H@@@b%%kkmk%i|!,[
-          @p|j%%%jkk|||j*\`\`;j[
-           ]@@@g|''\`'\`'  ,;j%k
-           @@@@mgmp;,,,,:;jj%k%
-          @@@@@@@%%kgki!|jjjj%k%@
-  .^['' %@@@HH%b%k{illljkj%%%\` ; \`,,.
- =[' \`   .%HH%%%%%H@gkillljjj%kk%".   \`i`
-
+const ASCII_ART =                                                               
+`                       ----...                             
+ -       ---------------------                             
+----.------------------+++++                               
+-----------+++---++++++                                    
+-..----------.------------++##  --++#++-                   
+-..-----------------------++--++++++++###++++##+           
+-..---------------------------------+###+++####++++        
+---------+++++-------++------------...-++##++###++++       
+----------+++-------+++-++--+++-+------++#++++##++---      
+------------##++++---+###++++++++++--++++++--+##+--++++    
+------++-----++++--+################++++###+-+##++-+#+##   
+-------++---------+################++##+-+#+++++-+######   
+---------++-------##########################+++++#######+  
+------------++-+--+######################+##+###########   
+-------------++-+--##############++###++##++++###+######   
++--++----------+---+#############+++++++++++++++++##+++    
++++++++-+-++++--..---+##########+######+#+++++++++++       
+ ++++++++++++++---+--+###+++++--++++++++#+++++####++       
+             +++---+--+#+-+++++++++-++++#+++###++##+       
+              +++--+--+++---------++++++#+##++-++   +#     
+              +++++++++++---------+++++#+-+#++-++  .-      
+               +++++++#+++------+++++++----#++--  .-       
+                      ++++++--------+----.--++++--         
+                      +++++++++-----+--------++            
+                      +++++++++++----++++++++              
+                     ++##+++++++-++----+++++-              
+            -------+#+++###+++++++++++++++++++--------     
+     ------------++++++++###++++++++---+++##+++----------  
+`
 export default function ReadmeTerminal () {
   return (
     <div className='rounded-md overflow-hidden border border-border bg-[#0d1117] font-mono text-[11px] md:text-[12px] leading-[1.15] shadow-2xl '>
@@ -44,13 +47,14 @@ export default function ReadmeTerminal () {
           {ASCII_ART}
         </pre>
 
-        <div className='text-foreground/90 whitespace-pre-wrap'>
+        <div className='text-foreground/90 whitespace-pre-wrap h-full flex flex-col justify-center'>
           <div className='text-secondary'>
             dru@429{' '}
             <span className='text-foreground/40'>
-              ──────────────────────────────
+              ─────────────────────────────────────────────────────────────
             </span>
           </div>
+          
           <Row k='OS' v='Kali Linux, macOS, Windows (WSL)' />
           <Row k='Uptime' v='20 years, 11 months, 25 days' />
           <Row k='Host' v='Independent / Open Source' />
@@ -67,7 +71,7 @@ export default function ReadmeTerminal () {
           <div className='text-secondary'>
             - Contact{' '}
             <span className='text-foreground/40'>
-              ─────────────────────────
+              ─────────────────────────────────────────────────────────────
             </span>
           </div>
           <Row k='Email' v='sahoo.dru@gmail.com' />
@@ -75,8 +79,10 @@ export default function ReadmeTerminal () {
           <Row k='X / Twitter' v='@10xdhruv' />
           <div className='h-3' />
           <div className='text-secondary'>
-            - GitHub Stats{'265'}
-            <span className='text-foreground/40'>──────────────────────</span>
+            - GitHub Stats{'   265'}
+            <span className='text-foreground/40'>
+            ──────────────────────
+            </span>
           </div>
           <Row k='Repos' v='63 {Contributed: 12} | Stars: 265' />
           <Row k='Commits' v='1,291 | Followers: 039' />
