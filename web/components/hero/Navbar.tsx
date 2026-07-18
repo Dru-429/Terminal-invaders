@@ -2,14 +2,19 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { WEBSITE_URL, PERSONAL_GITHUB_URL, PROJECT_NPM_URL, PERSONAL_X_URL } from '@/lib/links'
-import Link from 'next/link';
+import {
+  WEBSITE_URL,
+  PERSONAL_GITHUB_URL,
+  PROJECT_NPM_URL,
+  PERSONAL_X_URL
+} from '@/lib/links'
+import Link from 'next/link'
 
 const NAV = [
   { label: 'ABOUT', href: `${WEBSITE_URL}/#about` },
   { label: 'PROFILE', href: '/player' },
   { label: 'DOWNLOAD', href: `${WEBSITE_URL}/#download` },
-  { label: 'LEADERBOARD', href: '/leaderboard' },
+  { label: 'LEADERBOARD', href: '/leaderboard' }
 ]
 
 function formatToday () {
@@ -91,7 +96,6 @@ export function Navbar () {
     >
       {/* Top row */}
       <div className='grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-stretch border border-border bg-background'>
-
         <div className='hidden md:flex items-center justify-center p-5 border-b md:border-b-0 md:border-r border-border'>
           <div className='flex items-center gap-2 text-secondary'>
             <Invader className='h-20 w-auto' />
@@ -107,9 +111,10 @@ export function Navbar () {
             {today || 'WEDBNESDAY, JULY 20, 2005'}
           </p>
 
-          <Link 
+          <Link
             href={WEBSITE_URL}
-          className='font-pixel-line text-3xl md:text-8xl lg:text-7xl font- tracking-[0.04em] text-foreground leading-none'>
+            className='font-pixel-line text-3xl md:text-8xl lg:text-7xl font- tracking-[0.04em] text-foreground leading-none'
+          >
             TERMINAL INVADERS
           </Link>
 
@@ -119,20 +124,57 @@ export function Navbar () {
         </div>
 
         {/* Right Column: Market text / Signals */}
-        <div className='flex flex-row  md:flex-col items-center justify-between md:justify-center text-center p-2 md:p-5 border-t md:border-t-0 md:border-l border-border  text-[15px] tracking-[0.15em] text-foreground gap-3'>
-            <a href={PROJECT_NPM_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>NPM</a>
-            <a href={PERSONAL_GITHUB_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>GITHUB</a>
-            <a href={PERSONAL_X_URL} target='_blank' rel='noreferrer noopener' className='font hover:text-secondary hover:text cursor-pointer'>TWITTER</a>
+        <div className='flex flex-row  md:flex-col items-center justify-between md:justify-center text-center p-2 md:p-5 border-t md:border-t-0 md:border-l border-border text-[12px] md:text-[15px] tracking-[0.15em] text-foreground gap-3'>
+          <a
+            href={PROJECT_NPM_URL}
+            target='_blank'
+            rel='noreferrer noopener'
+            className='font hover:text-secondary hover:text cursor-pointer'
+          >
+            NPM
+          </a>
+          <a
+            href={PERSONAL_GITHUB_URL}
+            target='_blank'
+            rel='noreferrer noopener'
+            className='font hover:text-secondary hover:text cursor-pointer'
+          >
+            GITHUB
+          </a>
+          <a
+            href={PERSONAL_X_URL}
+            target='_blank'
+            rel='noreferrer noopener'
+            className='font hover:text-secondary hover:text cursor-pointer'
+          >
+            TWITTER
+          </a>
         </div>
       </div>
 
       {/* Nav row */}
-      <nav className='grid grid-cols-3 md:grid-cols-4 border border-border bg-border'>
+      <nav className='grid md:grid-cols-4 border-x border-border bg-border'>
         {NAV.map((item, index) => (
           <a
             key={index}
             href={item.href}
-            className='border-r-2 border-background md:last:border-r-0 py-3 text-center font-display font-semibold text-[8px] md:text-lg tracking-[0.35em] text-background transition-colors hover:text-foreground uppercase w-full'
+            className={`
+              flex items-center justify-center
+              py-3
+              font-display font-semibold
+              text-[8px] md:text-lg
+              tracking-[0.35em]
+              uppercase
+              text-background
+              transition-colors hover:text-foreground
+              border-b-2 md:border-b-0 border-r-2 border-background
+              md:last:border-r-0
+              ${
+                index === NAV.length - 1
+                  ? 'col-start-2 md:col-start-auto md:col-span-1 border-b md:border-r-0 borde-2 md:border-t-0 border-background'
+                  : ''
+              }
+            `} 
           >
             {item.label}
           </a>

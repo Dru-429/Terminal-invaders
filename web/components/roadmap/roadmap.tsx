@@ -56,7 +56,7 @@ export function Roadmap() {
 
       {/* Timeline */}
       <div className="mt-16 overflow-x-auto pb-4">
-        <div className="relative min-w-[880px]">
+        <div className="relative md:min-w-[880px]">
           {/* Track line */}
           <div className="absolute left-0 right-0 top-4 h-px bg-border" />
           {/* Progress line (animates from 0 → progressPct) */}
@@ -68,7 +68,7 @@ export function Roadmap() {
             className="absolute left-0 top-4 h-px bg-secondary"
           />
 
-          <ol className="relative grid grid-cols-8 gap-2">
+          <ol className="relative grid  md:grid-cols-8 gap-2">
             {MILESTONES.map((m, i) => {
               const delay = 0.2 + i * 0.18;
               const filled = m.status !== "upcoming";
