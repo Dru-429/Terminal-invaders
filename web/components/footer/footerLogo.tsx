@@ -5,28 +5,41 @@ export default function FooterLogo () {
     <div className='relative pt-32 pb-6' aria-hidden>
       {/* Background Glow */}
       <div
-        className='pointer-events-none absolute inset-x-0 bottom-0 h-[420px]'
+        className='pointer-events-none absolute inset-x-0 bottom-0 h-[520px]'
         style={{
           background: `
-          radial-gradient( ellipse at bottom, rgba(76,110,255,.45) 0%, rgba(90,70,255,.25) 40%, transparent 80% )`,
-          filter: 'blur(100px)'
+      radial-gradient(
+        ellipse 90% 55% at 50% 100%,
+        rgba(86,140,255,0.45) 0%,
+        rgba(72,115,230,0.32) 22%,
+        rgba(60,88,185,0.18) 45%,
+        rgba(35,30,90,0.12) 68%,
+        transparent 100%
+      )
+    `,
+          filter: 'blur(90px)'
         }}
       />
-
-      {/* Secondary Glow */}
+      {/* Blue Core */}
       <div
-        className='pointer-events-none absolute left-1/2 bottom-0 h-[280px] max-w-[950px] w-full -translate-x-1/2 rounded-full'
+        className='pointer-events-none absolute left-1/2 bottom-[-60px] h-[300px] w-[1400px] -translate-x-1/2 rounded-full'
         style={{
-          background:
-            'linear-gradient(90deg, rgba(59,130,246,.25), rgba(139,92,246,.35), rgba(59,130,246,.25))',
-          filter: 'blur(100px)'
+          background: `
+      radial-gradient(
+        ellipse at center,
+        rgba(94,164,255,0.42) 0%,
+        rgba(74,138,235,0.28) 42%,
+        rgba(63,103,214,0.15) 70%,
+        transparent 100%
+      )
+    `,
+          filter: 'blur(75px)'
         }}
-      />
-
+      />{' '}
       {/* Logo */}
       <h2 className='relative text-center -bottom-10'>
         <span
-          className='select-none font-pixel-line uppercase tracking-tight text-zinc-100 text-[24vw] md:text-[10vw]  '
+          className='select-none font-pixel-line uppercase text-center tracking-tight text-zinc-100 text-[20vw] md:text-[10vw]  '
           style={{
             lineHeight: 0.8,
             textShadow: `
@@ -38,9 +51,8 @@ export default function FooterLogo () {
           TERMINAL INVADERS
         </span>
       </h2>
-
       {/* Bottom Fade */}
-      <div className='pointer-events-none w-screen absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent' />
+      <div className='pointer-events-none w-screen absolute inset-x-0 -bottom-2  md:bottom-0 h-20 bg-gradient-to-t from-background to-transparent' />
     </div>
   )
 }
