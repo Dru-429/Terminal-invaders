@@ -5,14 +5,14 @@ import ArchDiagram from './Arch'
 
 export function OpenSource () {
   return (
-    <section className='relative w-full border border-border md:p-8'>
+    <section className='relative w-full border border-border py-12 px-4 md:p-8'>
       <div>
-        <div className='relative md:px-6 md:p-12'>
+        <div className='relative px-2 md:px-6 md:p-12'>
           {/* corner tags */}
-          <div className='absolute left-3 top-3 font-mono text-[10px] tracking-[0.3em] text-muted-foreground'>
+          <div className='absolute left-3 -top-8 md:top-3 font-mono text-[10px] tracking-[0.3em] text-muted-foreground'>
             MANIFEST / 003
           </div>
-          <div className='absolute right-3 top-3 font-mono text-[10px] tracking-[0.3em] text-secondary'>
+          <div className='absolute right-3 -top-8 md:top-3 font-mono text-[10px] tracking-[0.3em] text-secondary'>
             OPEN SOURCE
           </div>
 

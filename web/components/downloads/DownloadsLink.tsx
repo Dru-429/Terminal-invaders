@@ -48,7 +48,7 @@ export function DownloadLink () {
   const [tab, setTab] = useState<Manager>('NPM')
 
   return (
-    <div className='relative w-full md:border-r border-border px-6 md:px-8 py-16 md:py-24'>
+    <div className='relative w-full md:border-r border-border px-2 md:px-8 py-16 md:py-24'>
       {/* Corner tags */}
       <div className='mb-10 flex items-center justify-between'>
         <p className='text-[10px] tracking-[0.4em] text-muted-foreground'>
